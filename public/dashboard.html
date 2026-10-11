@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owner Dashboard | ApnaWeb</title>
+<meta name="description" content="Private owner dashboard for managing website requests.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1F5C45">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/css/site.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body class="dash">
+
+<section id="loginScreen" class="login">
+  <form id="loginForm" class="login-card" novalidate>
+    <a class="brand" href="/"><img src="/favicon-32.png" width="30" height="30" alt="">ApnaWeb</a>
+    <h1>Owner login</h1>
+    <p class="login-sub">Sign in to see and manage website requests.</p>
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+    </div>
+    <div class="alert alert-error" id="loginError" role="alert" hidden></div>
+    <button class="btn btn-primary" id="loginBtn" type="submit">Sign in</button>
+    <a class="back-link" href="/">Back to the website</a>
+  </form>
+</section>
+
+<section id="appScreen" hidden>
+  <header class="dash-header">
+    <div class="dash-wrap dash-header-inner">
+      <div class="dash-title">
+        <a class="brand" href="/"><img src="/favicon-32.png" width="30" height="30" alt="">ApnaWeb</a>
+        <span class="dash-badge">Owner dashboard</span>
+      </div>
+      <div class="dash-actions">
+        <a class="btn btn-secondary btn-sm" href="/" target="_blank" rel="noopener">View website</a>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn" type="button">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash-wrap dash-main" id="main">
+    <h1 class="dash-h1">Website requests</h1>
+
+    <div class="stats" id="stats" aria-label="Request counts"></div>
+
+    <div class="toolbar">
+      <div class="field grow">
+        <label for="search">Search</label>
+        <input id="search" type="search" placeholder="Name, business, city or request ID">
+      </div>
+      <div class="field">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter">
+          <option value="all">All statuses</option>
+          <option value="New">New</option>
+          <option value="Contacted">Contacted</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+      </div>
+      <button class="btn btn-secondary" id="refreshBtn" type="button">Refresh</button>
+    </div>
+
+    <div class="alert alert-error" id="listError" role="alert" hidden></div>
+
+    <div class="table-wrap">
+      <table class="req-table">
+        <thead>
+          <tr>
+            <th scope="col">Request</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Contact</th>
+            <th scope="col">Needs</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="empty" id="empty" hidden></p>
+    </div>
+
+    <h2 class="dash-h2">Messages from the portfolio page</h2>
+    <div id="messages" class="messages"></div>
+    <p class="empty" id="messagesEmpty" hidden>No messages yet.</p>
+  </main>
+
+  <footer class="dash-footer">
+    <div class="dash-wrap">&copy; <span data-year>2026</span> ApnaWeb. Private area.</div>
+  </footer>
+</section>
+
+<dialog id="detail" aria-labelledby="detailTitle">
+  <div class="dialog-head">
+    <h2 id="detailTitle">Request</h2>
+    <button class="btn btn-secondary btn-sm" id="detailClose" type="button">Close</button>
+  </div>
+  <dl class="detail-list" id="detailList"></dl>
+  <h3 class="detail-sub">What they need</h3>
+  <p class="detail-text" id="detailText"></p>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="/js/dashboard.js" defer></script>
+</body>
+</html>
