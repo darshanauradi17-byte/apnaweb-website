@@ -1,0 +1,21 @@
+# Friday Code workspace defaults
+node_modules/
+.pnp/
+.pnp.js
+dist/
+build/
+.next/
+out/
+.cache/
+coverage/
+.env
+.env.local
+.env.*.local
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+npm-debug.log*
+yarn-error.log*
+.friday/
