@@ -495,5 +495,5 @@ app.use(function (error, req, res, next) {
 });
 
 app.listen(PORT, function () {
-  console.log("ApnaWeb is running on http://localhost:" + PORT);
+  console.log("BrandX Web is running on http://localhost:" + PORT);
 });

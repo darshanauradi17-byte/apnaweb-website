@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var TOKEN_KEY = "apnaweb_owner_token";
+  var TOKEN_KEY = "BrandX Web_owner_token";
   var STATUSES = ["New", "Contacted", "In Progress", "Delivered"];
 
   var loginScreen = document.getElementById("loginScreen");
