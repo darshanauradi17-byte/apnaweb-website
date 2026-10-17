@@ -388,22 +388,10 @@ section[id],
 }
 
 .card {
-  padding: 24px;
+  padding: 26px;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  display: flex;
-  flex-direction: column;
-}
-
-.card-photo {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: calc(var(--radius) - 2px);
-  margin-bottom: 16px;
-  display: block;
-  background: var(--paper-2);
 }
 
 .card .icon {
@@ -1215,5 +1203,104 @@ section[id],
 
   .success-actions .btn {
     width: 100%;
+  }
+}
+
+
+/* BrandX Web brand colors */
+:root {
+  --primary-blue: #1D4E89;
+  --primary-blue-hover: #153A66;
+  --page-background: #F5F7FA;
+  --text-color: #14202E;
+}
+
+/* Main page */
+body {
+  background-color: var(--page-background);
+  color: var(--text-color);
+}
+
+/* Buttons */
+button,
+.btn,
+input[type="submit"] {
+  background-color: var(--primary-blue);
+  color: #FFFFFF;
+}
+
+button:hover,
+.btn:hover,
+input[type="submit"]:hover {
+  background-color: var(--primary-blue-hover);
+}
+
+a {
+  color: var(--primary-blue);
+}
+
+
+/* ApnaWeb animated hero waves */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.hero-waves {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.9;
+}
+
+.hero-waves svg {
+  position: absolute;
+  left: -50%;
+  bottom: 0;
+  width: 200%;
+  height: 75%;
+  animation: wave-drift 16s linear infinite;
+}
+
+.hero-waves .wave-one {
+  fill: #1F5C45;
+  fill-opacity: 0.30;
+  animation: wave-float 7s ease-in-out infinite alternate;
+}
+
+.hero-waves .wave-two {
+  fill: #1F5C45;
+  fill-opacity: 0.24;
+  animation: wave-float 9s ease-in-out infinite alternate-reverse;
+}
+
+.hero-waves .wave-three {
+  fill: #1F5C45;
+  fill-opacity: 0.18;
+  animation: wave-float 11s ease-in-out infinite alternate;
+}
+
+.hero .hero-grid {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes wave-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(25%); }
+}
+
+@keyframes wave-float {
+  from { transform: translateY(-8px); }
+  to { transform: translateY(8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-waves svg,
+  .hero-waves .wave {
+    animation: none;
   }
 }

@@ -169,7 +169,7 @@ app.use(express.json({ limit: "20kb" }));
 app.use(express.urlencoded({ extended: false, limit: "20kb" }));
 
 // Serve one address per page: /portfolio, not /portfolio.html.
-app.get(["/index.html", "/portfolio.html", "/dashboard.html"], function (req, res) {
+app.get(["/index.html", "/dashboard.html"], function (req, res) {
   const clean = req.path.replace(/(^\/index)?\.html$/, "") || "/";
   res.redirect(301, clean === "" ? "/" : clean);
 });

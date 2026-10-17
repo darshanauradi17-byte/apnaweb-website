@@ -45,7 +45,7 @@
 <nav class="primary-nav" id="primaryNav" aria-label="Main">
 <a href="#services">Services</a>
 <a href="#how">How it works</a>
-<a href="/portfolio">Our work</a>
+
 <a href="#track">Track a request</a>
 <a href="#contact">Contact</a>
 <a class="btn btn-primary nav-cta" href="#request">Request a website</a>
@@ -61,27 +61,28 @@
 </header>
 <main id="main">
 
-<section class="hero">
-<div class="wrap hero-grid">
-<div>
-<h1>A simple website for your shop, clinic or restaurant.</h1>
-<p class="hero-lead">Fill in one form about your business. We call you within 2 days, then build a mobile friendly website with your services or menu, your address and a button to call or WhatsApp you.</p>
-<div class="hero-actions">
-<a class="btn btn-primary" href="#request">Request a website <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-<a class="btn btn-secondary" href="/portfolio">See our work</a>
-</div>
-</div>
-<aside class="hero-aside" aria-labelledby="includes-title">
-<h2 id="includes-title">What your website includes</h2>
-<ul class="check-list">
-<li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Your services, menu or product list</span></li>
-<li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Address and opening hours</span></li>
-<li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Tap to call and WhatsApp buttons</span></li>
-<li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Looks right on phones, tablets and computers</span></li>
-<li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>A request ID so you can follow progress</span></li>
-</ul>
-</aside>
-</div>
+<section class="hero" style="position:relative;overflow:hidden;">
+  <canvas id="heroCanvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;" aria-hidden="true"></canvas>
+  <div class="wrap hero-grid" style="position:relative;z-index:1;">
+    <div>
+    <h1>A simple website for your shop, clinic or restaurant.</h1>
+    <p class="hero-lead">Fill in one form about your business. We call you within 2 days, then build a mobile friendly website with your services or menu, your address and a button to call or WhatsApp you.</p>
+    <div class="hero-actions">
+    <a class="btn btn-primary" href="#request">Request a website <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+
+    </div>
+    </div>
+    <aside class="hero-aside" aria-labelledby="includes-title">
+    <h2 id="includes-title">What your website includes</h2>
+    <ul class="check-list">
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Your services, menu or product list</span></li>
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Address and opening hours</span></li>
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Tap to call and WhatsApp buttons</span></li>
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Looks right on phones, tablets and computers</span></li>
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>A request ID so you can follow progress</span></li>
+    </ul>
+    </aside>
+  </div>
 </section>
 
 <section class="section section-alt" id="services">
@@ -195,7 +196,7 @@
 <figcaption><strong>Owner dashboard</strong>Search, filter and update every request. Shown with sample entries.</figcaption>
 </figure>
 </div>
-<p class="work-cta"><a class="btn btn-secondary" href="/portfolio">View the full portfolio</a></p>
+
 </div>
 </section>
 
@@ -340,7 +341,7 @@
 <ul class="footer-links">
 <li><a href="/#services">Services</a></li>
 <li><a href="/#how">How it works</a></li>
-<li><a href="/portfolio">Portfolio</a></li>
+
 <li><a href="/#request">Request a website</a></li>
 <li><a href="/#track">Track a request</a></li>
 </ul>
@@ -359,5 +360,45 @@
 </div>
 </footer>
 <script src="/js/site.js" defer></script>
+<script>
+  (function () {
+    var canvas = document.getElementById("heroCanvas");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var width, height, t = 0;
+    var waves = [
+      { amplitude: 40, frequency: 0.01, phase: 0, speed: 0.5, color: "rgba(255,255,255,0.14)" },
+      { amplitude: 60, frequency: 0.007, phase: 2, speed: 0.7, color: "rgba(255,255,255,0.10)" },
+      { amplitude: 80, frequency: 0.005, phase: 4, speed: 0.9, color: "rgba(255,255,255,0.07)" }
+    ];
+    function resize() {
+      width = canvas.parentElement.clientWidth;
+      height = canvas.parentElement.clientHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      waves.forEach(function (w) {
+        ctx.beginPath();
+        ctx.moveTo(0, height / 2);
+        for (var x = 0; x <= width; x += 20) {
+          var y = Math.sin(x * w.frequency + t * w.speed + w.phase) * w.amplitude;
+          ctx.lineTo(x, height / 2 + y);
+        }
+        ctx.lineTo(width, height);
+        ctx.lineTo(0, height);
+        ctx.closePath();
+        ctx.fillStyle = w.color;
+        ctx.fill();
+      });
+      t += 0.01;
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+</script>
 </body>
 </html>

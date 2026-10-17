@@ -62,6 +62,18 @@
 <main id="main">
 
 <section class="hero">
+    
+<div class="hero-waves" aria-hidden="true">
+  <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+    <path class="wave wave-one"
+      d="M0,160 C240,240 480,80 720,160 S1200,240 1440,160 L1440,320 L0,320 Z" />
+    <path class="wave wave-two"
+      d="M0,200 C240,120 480,280 720,200 S1200,120 1440,200 L1440,320 L0,320 Z" />
+    <path class="wave wave-three"
+      d="M0,240 C240,180 480,300 720,240 S1200,180 1440,240 L1440,320 L0,320 Z" />
+  </svg>
+</div>
+
 <div class="wrap hero-grid">
 <div>
 <h1>A simple website for your shop, clinic or restaurant.</h1>
@@ -92,47 +104,73 @@
 <p>Pick the closest match. If your business is not listed, choose Other in the form and describe it.</p>
 </div>
 <div class="card-grid">
-<article class="card">
-<img class="card-photo" src="/images/business%20website.jpg" alt="Business website design" loading="lazy" width="600" height="400">
-<svg class="icon" aria-hidden="true"><use href="#i-briefcase"/></svg>
-<h3>Business websites</h3>
-<p>For service providers and small companies. Who you are, what you do and how to reach you.</p>
-</article>
 
-<article class="card">
-<img class="card-photo" src="/images/restaurant%20website.jpg" alt="Restaurant website design" loading="lazy" width="600" height="400">
-<svg class="icon" aria-hidden="true"><use href="#i-utensils"/></svg>
-<h3>Restaurant websites</h3>
-<p>Your menu, address and opening hours, with call and WhatsApp buttons for bookings and enquiries.</p>
-</article>
+  <!-- Business websites -->
+  <article class="card">
+    <img class="card-photo"
+         src="/images/business website.jpg"
+         alt="Professional business office"
+         loading="lazy">
+    <svg class="icon" aria-hidden="true"><use href="#i-briefcase"/></svg>
+    <h3>Business websites</h3>
+    <p>For service providers and small companies. Who you are, what you do and how to reach you.</p>
+  </article>
 
-<article class="card">
-<img class="card-photo" src="/images/shop%20website.jpg" alt="Shop website design" loading="lazy" width="600" height="400">
-<svg class="icon" aria-hidden="true"><use href="#i-store"/></svg>
-<h3>Shop websites</h3>
-<p>Show what you sell, where the shop is and when it is open.</p>
-</article>
+  <!-- Restaurant websites -->
+  <article class="card">
+    <img class="card-photo"
+         src="/images/restaurant website.jpg"
+         alt="Restaurant interior and dining area"
+         loading="lazy">
+    <svg class="icon" aria-hidden="true"><use href="#i-utensils"/></svg>
+    <h3>Restaurant websites</h3>
+    <p>Your menu, address and opening hours, with call and WhatsApp buttons for bookings and enquiries.</p>
+  </article>
 
-<article class="card">
-<img class="card-photo" src="/images/medical%20website.jpg" alt="Clinic and medical store website design" loading="lazy" width="600" height="400">
-<svg class="icon" aria-hidden="true"><use href="#i-medical"/></svg>
-<h3>Clinic and medical store websites</h3>
-<p>Services, timings, address and a phone number patients can tap to call.</p>
-</article>
+  <!-- Shop websites -->
+  <article class="card">
+    <img class="card-photo"
+         src="/images/shop website.jpg"
+         alt="Products displayed in a retail shop"
+         loading="lazy">
+    <svg class="icon" aria-hidden="true"><use href="#i-store"/></svg>
+    <h3>Shop websites</h3>
+    <p>Show what you sell, where the shop is and when it is open.</p>
+  </article>
 
-<article class="card">
-<img class="card-photo" src="/images/education%20website.jpg" alt="Education website design" loading="lazy" width="600" height="400">
-<svg class="icon" aria-hidden="true"><use href="#i-book"/></svg>
-<h3>Education websites</h3>
-<p>Courses, batches, fees and an enquiry form for institutes and tutors.</p>
-</article>
+  <!-- Clinic and medical store websites -->
+  <article class="card">
+    <img class="card-photo"
+         src="/images/medical website.jpg"
+         alt="Clean and modern medical clinic"
+         loading="lazy">
+    <svg class="icon" aria-hidden="true"><use href="#i-medical"/></svg>
+    <h3>Clinic and medical store websites</h3>
+    <p>Services, timings, address and a phone number patients can tap to call.</p>
+  </article>
 
-<article class="card">
-<img class="card-photo" src="/images/real%20estate%20website.jpg" alt="Real estate website design" loading="lazy" width="600" height="400">
-<svg class="icon" aria-hidden="true"><use href="#i-home"/></svg>
-<h3>Real estate websites</h3>
-<p>Property listings with photos and locations, and a quick way for buyers to contact you.</p>
-</article>
+  <!-- Education websites -->
+  <article class="card">
+    <img class="card-photo"
+         src="/images/education website.jpg"
+         alt="Students learning in a classroom"
+         loading="lazy">
+    <svg class="icon" aria-hidden="true"><use href="#i-book"/></svg>
+    <h3>Education websites</h3>
+    <p>Courses, batches, fees and an enquiry form for institutes and tutors.</p>
+  </article>
+
+  <!-- Real estate websites -->
+  <article class="card">
+    <img class="card-photo"
+         src="/images/real estate website.jpg"
+         alt="Modern residential property"
+         loading="lazy">
+    <svg class="icon" aria-hidden="true"><use href="#i-home"/></svg>
+    <h3>Real estate websites</h3>
+    <p>Property listings with photos and locations, and a quick way for buyers to contact you.</p>
+  </article>
+
 </div>
 </div>
 </section>
@@ -161,16 +199,8 @@
 <p class="work-note">The request form, the tracking page and the owner dashboard on this site were designed and built by Darshan Auradi. Client websites will be listed here once they are live.</p>
 <div class="work-grid">
 <figure class="shot">
-<img src="/images/shot-home.webp" width="1280" height="760" alt="The BrandX Web home page with the headline and what a website includes" loading="lazy" decoding="async">
-<figcaption><strong>Home page</strong>Explains the service and links straight to the request form.</figcaption>
-</figure>
-<figure class="shot">
 <img src="/images/shot-request.webp" width="1120" height="846" alt="The BrandX Web request form with fields for name, business, contact details and requirements" loading="lazy" decoding="async">
 <figcaption><strong>Request form</strong>Collects business details and gives the customer a request ID.</figcaption>
-</figure>
-<figure class="shot">
-<img src="/images/shot-track.webp" width="1120" height="594" alt="The BrandX Web tracking page showing a request moving through four stages" loading="lazy" decoding="async">
-<figcaption><strong>Tracking page</strong>Four stages, from request received to delivered.</figcaption>
 </figure>
 <figure class="shot">
 <img src="/images/shot-dashboard.webp" width="1280" height="860" alt="The BrandX Web owner dashboard listing website requests with status controls" loading="lazy" decoding="async">
