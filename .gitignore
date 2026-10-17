@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Friday Code workspace defaults
 node_modules/
 .pnp/
@@ -19,3 +20,11 @@ Thumbs.db
 npm-debug.log*
 yarn-error.log*
 .friday/
+=======
+node_modules/
+.env
+.env.*
+!.env.example
+*.tmp
+_removed/
+>>>>>>> 5b0709471df8e7d67fc38253d89a472a8003358c
