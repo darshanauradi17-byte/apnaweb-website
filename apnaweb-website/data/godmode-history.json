@@ -1,0 +1,284 @@
+[
+  {
+    "id": "plan_1792204888734_ppzv",
+    "title": "Add Floating WhatsApp Quick-Connect Widget",
+    "goal": "Increase mobile conversion rates by 35-50% with an accessible one-tap WhatsApp contact button",
+    "appliedAt": "2026-10-17T02:41:33.387Z",
+    "backupId": "backup_1792204893298",
+    "filesTouched": [
+      "public/index.html",
+      "public/css/site.css"
+    ]
+  },
+  {
+    "id": "plan_1792204494275_gjfh",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:36:03.807Z",
+    "backupId": "backup_1792204563772",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "rollback_1792203980008",
+    "title": "Rollback of: Fix Broken Service Card Images",
+    "goal": "Restored previous state",
+    "appliedAt": "2026-10-17T02:26:20.008Z",
+    "backupId": "backup_1792203338965",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203957333_qlk6",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:26:08.173Z",
+    "backupId": "backup_1792203968138",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:55.847Z",
+    "backupId": "backup_1792203895829",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:46.296Z",
+    "backupId": "backup_1792203886278",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:46.078Z",
+    "backupId": "backup_1792203886066",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:45.843Z",
+    "backupId": "backup_1792203885804",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:45.593Z",
+    "backupId": "backup_1792203885583",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:45.399Z",
+    "backupId": "backup_1792203885382",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:45.294Z",
+    "backupId": "backup_1792203885265",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:45.127Z",
+    "backupId": "backup_1792203885099",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:44.303Z",
+    "backupId": "backup_1792203884292",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:43.665Z",
+    "backupId": "backup_1792203883643",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:43.450Z",
+    "backupId": "backup_1792203883438",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:43.343Z",
+    "backupId": "backup_1792203883291",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:43.166Z",
+    "backupId": "backup_1792203883140",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:42.973Z",
+    "backupId": "backup_1792203882952",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:42.424Z",
+    "backupId": "backup_1792203882401",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:41.450Z",
+    "backupId": "backup_1792203881426",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203853037_uatc",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:24:39.795Z",
+    "backupId": "backup_1792203879773",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "rollback_1792203866789",
+    "title": "Rollback of: Fix Broken Service Card Images",
+    "goal": "Restored previous state",
+    "appliedAt": "2026-10-17T02:24:26.789Z",
+    "backupId": "backup_1792203821627",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203816876_rfa4",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:23:41.655Z",
+    "backupId": "backup_1792203821627",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203759464_mydx",
+    "title": "Add Schema.org JSON-LD Structured Data",
+    "goal": "Qualify for Google Search rich snippets, business hours display, and Maps knowledge graph",
+    "appliedAt": "2026-10-17T02:22:43.470Z",
+    "backupId": "backup_1792203763440",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203729635_gzew",
+    "title": "Add Floating WhatsApp Quick-Connect Widget",
+    "goal": "Increase mobile conversion rates by 35-50% with an accessible one-tap WhatsApp contact button",
+    "appliedAt": "2026-10-17T02:22:14.046Z",
+    "backupId": "backup_1792203734007",
+    "filesTouched": [
+      "public/index.html",
+      "public/css/site.css"
+    ]
+  },
+  {
+    "id": "plan_1792203641350_em1m",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:20:50.952Z",
+    "backupId": "backup_1792203650915",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203298942_47u8",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:15:51.879Z",
+    "backupId": "backup_1792203351817",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  },
+  {
+    "id": "plan_1792203298942_47u8",
+    "title": "Fix Broken Service Card Images",
+    "goal": "Restore missing 404 images on home page by pointing to verified high-res assets on disk",
+    "appliedAt": "2026-10-17T02:15:38.986Z",
+    "backupId": "backup_1792203338965",
+    "filesTouched": [
+      "public/index.html"
+    ]
+  }
+]

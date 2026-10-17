@@ -1,6 +1,6 @@
-# ApnaWeb Security Audit & Hardening Plan
+# BrandX Web Security Audit & Hardening Plan
 
-Repo root: `c:\Users\darsh\Downloads\apnaweb-website\apnaweb-website` (git repo, 1 commit `5b07094` on `main`, pushed to PUBLIC GitHub repo `darshanauradi17-byte/apnaweb-website`).
+Repo root: `c:\Users\darsh\Downloads\BrandX Web-website\BrandX Web-website` (git repo, 1 commit `5b07094` on `main`, pushed to PUBLIC GitHub repo `darshanauradi17-byte/BrandX Web-website`).
 Stack: Node 18+ / Express 4.22.2 / dotenv, static HTML+JS frontend, JSON-file storage. No tests, no linter, no build step.
 
 PROTECTED (never modify): owner dashboard (dashboard.html, js/dashboard.js, css/dashboard.css), portfolio (portfolio.html), and site.js/css (serves portfolio + tracking).

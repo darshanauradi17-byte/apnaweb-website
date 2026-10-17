@@ -1,0 +1,13 @@
+{
+  "backupId": "backup_1792203763440",
+  "planId": "plan_1792203759464_mydx",
+  "title": "Add Schema.org JSON-LD Structured Data",
+  "timestamp": "2026-10-17T02:22:43.447Z",
+  "files": [
+    {
+      "originalPath": "public/index.html",
+      "backupFile": "public_index.html",
+      "existed": true
+    }
+  ]
+}

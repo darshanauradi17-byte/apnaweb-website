@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GODMODE AI — Autonomous Website Intelligence Agent</title>
+<meta name="description" content="Intelligent AI partner for website analysis, proactive optimization, and autonomous code execution.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#07090e">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/css/godmode.css">
+</head>
+<body class="godmode-body">
+
+<!-- Header -->
+<header class="gm-header">
+  <div class="gm-header-inner">
+    <div class="gm-brand-group">
+      <div class="gm-orb" id="gmOrb" title="GODMODE AI Core Active"></div>
+      <a href="/godmode" class="gm-logo">
+        <span>GODMODE AI</span>
+      </a>
+      <span class="gm-version-badge" id="gmAgentBadge">v3.0 // AUTONOMOUS</span>
+    </div>
+
+    <!-- Navigation Switcher -->
+    <nav class="gm-mode-nav" aria-label="Agent Modes">
+      <button type="button" class="gm-mode-btn active" data-view="agent">🧠 Agent Copilot</button>
+      <button type="button" class="gm-mode-btn" data-view="audit">🔍 Audit & Health</button>
+      <button type="button" class="gm-mode-btn" data-view="execute">⚡ Execution Hub</button>
+      <button type="button" class="gm-mode-btn" data-view="insights">💡 Proactive</button>
+      <button type="button" class="gm-mode-btn" data-view="files">📁 Files</button>
+      <button type="button" class="gm-mode-btn" data-view="preview">🌐 Live Preview</button>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="gm-header-actions">
+      <button type="button" class="gm-btn" id="btnRunAuditQuick" title="Run instant audit">🔍 Scan Site</button>
+      <button type="button" class="gm-btn" id="btnOpenSettings" title="AI Configuration">⚙️ Settings</button>
+      <a href="/" target="_blank" rel="noopener" class="gm-btn">Website ↗</a>
+      <a href="/dashboard" target="_blank" rel="noopener" class="gm-btn">Dashboard ↗</a>
+    </div>
+  </div>
+</header>
+
+<!-- Workspace Main -->
+<main class="gm-workspace">
+
+  <!-- =========================================================================
+       VIEW 1: AGENT COPILOT (Natural Conversation & Goal Execution)
+       ========================================================================= -->
+  <section class="gm-view active" id="viewAgent">
+    <div class="agent-layout">
+      <!-- Chat Panel -->
+      <div class="chat-panel">
+        <div class="chat-messages" id="chatMessages" role="log" aria-live="polite">
+          <!-- Initial Welcome Message from Godmode -->
+          <div class="message-bubble message-agent">
+            <p><strong>👋 Greetings! I am GODMODE AI, your autonomous website intelligence agent.</strong></p>
+            <p>I don't just answer questions with text. I inspect your actual code on disk, perform real-time audits, identify weaknesses, recommend proactive improvements, and safely generate and apply code modifications with automatic backups and verification.</p>
+            <div class="agent-action-group">
+              <button type="button" class="agent-action-chip" data-prompt="Run full website audit">🔍 Run Complete Website Audit</button>
+              <button type="button" class="agent-action-chip" data-issue="fix-missing-images">🖼️ Fix Broken Service Images (404)</button>
+              <button type="button" class="agent-action-chip" data-issue="biz-whatsapp-quickaction">📱 Add Floating WhatsApp Button</button>
+              <button type="button" class="agent-action-chip" data-issue="biz-price-estimator">💰 Add Price Estimator Calculator</button>
+              <button type="button" class="agent-action-chip" data-issue="seo-schema-jsonld">📈 Inject LocalBusiness Schema</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Input & Quick Prompts -->
+        <div class="chat-input-area">
+          <div class="quick-prompts">
+            <button type="button" class="quick-chip" data-prompt="Audit my website and tell me what is wrong">🔍 Audit Website</button>
+            <button type="button" class="quick-chip" data-prompt="Fix the 6 broken service card images on home page">🖼️ Fix Broken Images</button>
+            <button type="button" class="quick-chip" data-prompt="Add a floating WhatsApp quick connect button">📱 Add WhatsApp Button</button>
+            <button type="button" class="quick-chip" data-prompt="Add an interactive price and scope estimator">💰 Add Price Calculator</button>
+            <button type="button" class="quick-chip" data-prompt="Add an FAQ accordion section">❓ Add FAQ Accordion</button>
+            <button type="button" class="quick-chip" data-prompt="What is the next best action to increase my conversion?">💡 Next Best Action</button>
+          </div>
+
+          <form class="chat-form" id="chatForm">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Give an instruction, ask for analysis, or describe an improvement..." autocomplete="off" required>
+            <button type="submit" class="gm-btn gm-btn-primary" id="chatSubmitBtn">Execute &rarr;</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Sidebar -->
+      <aside class="sidebar-panel">
+        <div class="info-card">
+          <h4>
+            <span>AI Status & Intelligence</span>
+            <span class="gm-orb" style="width:8px; height:8px;"></span>
+          </h4>
+          <div class="status-row">
+            <span class="status-label">Active Provider</span>
+            <span class="status-val" id="statusProvider">Local Heuristic (Autonomous)</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Website Health</span>
+            <span class="status-val" id="statusOverallScore" style="color:var(--neon-emerald)">Scanning...</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Execution Backups</span>
+            <span class="status-val" id="statusBackupCount">0 Available</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Server Mode</span>
+            <span class="status-val">Node.js / Express</span>
+          </div>
+        </div>
+
+        <div class="info-card" style="flex:1; display:flex; flex-direction:column;">
+          <h4>
+            <span>Live Action Terminal</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:var(--neon-cyan);">STREAM // ACTIVE</span>
+          </h4>
+          <div class="terminal-window" id="terminalLog">
+            <div class="term-line"><span class="term-time">[00:00]</span> <span class="term-ok">GODMODE AI Engine initialized.</span></div>
+            <div class="term-line"><span class="term-time">[00:01]</span> <span>Connected to Express backend at /api/godmode.</span></div>
+            <div class="term-line"><span class="term-time">[00:01]</span> <span class="term-ok">Ready for autonomous operations.</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 2: AUDIT & HEALTH (5-Pillar Analysis & 1-Click Fixes)
+       ========================================================================= -->
+  <section class="gm-view" id="viewAudit">
+    <div class="audit-header-banner">
+      <div class="audit-score-gauge">
+        <div class="score-circle" id="auditScoreGauge">--</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <h2 style="font-size:22px; font-weight:700; color:#fff; margin:0;">Comprehensive Website Health Audit</h2>
+            <span id="auditEnvBadge" style="font-size:11px; font-family:var(--font-mono); color:var(--neon-cyan); background:rgba(0,210,255,0.1); border:1px solid rgba(0,210,255,0.3); padding:3px 10px; border-radius:12px;">Local Project Workspace</span>
+          </div>
+          <p style="color:var(--text-muted); font-size:14px; margin-top:6px;" id="auditTimestampText">Real-time scan of HTML, CSS, JS, Assets, and Server Headers</p>
+        </div>
+      </div>
+      <div>
+        <button type="button" class="gm-btn gm-btn-primary" id="btnReAudit">⚡ Re-run Full Audit</button>
+      </div>
+    </div>
+
+    <!-- 5 Pillar Metrics -->
+    <div class="audit-metrics-grid">
+      <div class="metric-card">
+        <span class="status-label">SEO & Discoverability</span>
+        <div class="metric-score" id="scoreSeo">--</div>
+        <p style="font-size:12px; color:var(--text-muted)">Canonicals, JSON-LD, OG tags</p>
+      </div>
+      <div class="metric-card">
+        <span class="status-label">Speed & Assets</span>
+        <div class="metric-score" id="scorePerf">--</div>
+        <p style="font-size:12px; color:var(--text-muted)">Missing images, 0-byte files, formats</p>
+      </div>
+      <div class="metric-card">
+        <span class="status-label">UX & Accessibility</span>
+        <div class="metric-score" id="scoreUx">--</div>
+        <p style="font-size:12px; color:var(--text-muted)">Contrast, FAQ, mobile touch targets</p>
+      </div>
+      <div class="metric-card">
+        <span class="status-label">Security & Headers</span>
+        <div class="metric-score" id="scoreSec">--</div>
+        <p style="font-size:12px; color:var(--text-muted)">CSP, HSTS, rate limits, frame policies</p>
+      </div>
+      <div class="metric-card">
+        <span class="status-label">Conversion & Growth</span>
+        <div class="metric-score" id="scoreBiz">--</div>
+        <p style="font-size:12px; color:var(--text-muted)">WhatsApp float, price estimator, CTA</p>
+      </div>
+    </div>
+
+    <!-- Detected Issues Section -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <h3 style="font-size:18px; font-weight:600; color:#fff; margin:0;">Detected Optimization Opportunities (<span id="issuesCount">0</span>)</h3>
+    </div>
+    <div class="issues-container" id="issuesList">
+      <p style="color:var(--text-muted);">Loading audit data...</p>
+    </div>
+
+    <!-- Configuration Warnings Section -->
+    <div style="margin-top:28px; margin-bottom:14px;" id="warningsHeader">
+      <h3 style="font-size:18px; font-weight:600; color:var(--neon-amber); margin:0 0 4px 0;">Configuration Warnings & Advisories (<span id="warningsCount">0</span>)</h3>
+      <p style="font-size:13px; color:var(--text-muted); margin:0;">Advisories that require production URL, DNS, or deployment environment settings before public launch.</p>
+    </div>
+    <div class="issues-container" id="warningsList"></div>
+
+    <!-- Verified & Passing Checks Section -->
+    <div style="margin-top:28px; margin-bottom:14px;" id="passedHeader">
+      <h3 style="font-size:18px; font-weight:600; color:var(--neon-emerald); margin:0 0 4px 0;">Verified & Passing Audits (<span id="passedCount">0</span>)</h3>
+      <p style="font-size:13px; color:var(--text-muted); margin:0;">Checks confirmed passing against project assets, markup, scripts, and server configuration.</p>
+    </div>
+    <div class="issues-container" id="passedChecksList"></div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 3: EXECUTION HUB (Plan -> Diff -> Approve -> Apply -> Rollback)
+       ========================================================================= -->
+  <section class="gm-view" id="viewExecute">
+    <div class="execution-layout">
+      <div class="pipeline-header">
+        <div>
+          <span class="severity-pill sev-medium" id="planRiskBadge">Low Risk</span>
+          <h2 style="font-size:22px; font-weight:700; color:#fff; margin-top:8px;" id="planTitleText">No Active Plan</h2>
+          <p style="color:var(--text-muted); font-size:14px; margin-top:4px;" id="planGoalText">Select an optimization from the Audit, Proactive tab, or ask the Agent to generate an execution plan.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button type="button" class="gm-btn gm-btn-primary" id="btnApproveApply" disabled>🚀 Approve & Apply Changes</button>
+          <button type="button" class="gm-btn gm-btn-danger" id="btnRejectPlan" disabled>❌ Reject</button>
+        </div>
+      </div>
+
+      <div class="diff-box">
+        <div class="diff-header">
+          <span id="diffTargetFile">Proposed Unified Code Diff</span>
+          <span style="font-size:12px; font-weight:normal; color:var(--text-muted);" id="diffLineCount">0 modifications</span>
+        </div>
+        <div class="diff-lines" id="diffLines">
+          <div class="diff-line same" style="padding:20px; text-align:center; color:var(--text-dim);">
+            No pending diff. Select a task or ask GODMODE AI in the Agent tab to generate a plan.
+          </div>
+        </div>
+      </div>
+
+      <!-- Execution History & Rollbacks -->
+      <div class="info-card">
+        <h4 style="margin-bottom:12px;">Past Executions & 1-Click Rollbacks</h4>
+        <div id="executionHistoryList">
+          <p style="color:var(--text-muted); font-size:13px;">No past executions yet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 4: PROACTIVE RECOMMENDATIONS
+       ========================================================================= -->
+  <section class="gm-view" id="viewInsights">
+    <div style="margin-bottom:20px;">
+      <h2 style="font-size:24px; font-weight:700; color:#fff;">Proactive Intelligence & Growth Upgrades</h2>
+      <p style="color:var(--text-muted); font-size:14px; margin-top:4px;">Autonomous suggestions to modernize design, maximize client conversion, and boost search rankings.</p>
+    </div>
+    <div class="recs-grid" id="proactiveRecsGrid">
+      <p style="color:var(--text-muted);">Loading recommendations...</p>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 5: FILE EXPLORER
+       ========================================================================= -->
+  <section class="gm-view" id="viewFiles">
+    <div style="display:grid; grid-template-columns:300px 1fr; gap:20px; min-height:calc(100vh - 140px);">
+      <div class="info-card" style="padding:16px;">
+        <h4 style="margin-bottom:12px;">Project Files on Disk</h4>
+        <div id="fileTreeList" style="display:flex; flex-direction:column; gap:6px; font-family:var(--font-mono); font-size:13px; max-height:70vh; overflow-y:auto;">
+          <p style="color:var(--text-muted);">Loading files...</p>
+        </div>
+      </div>
+
+      <div class="diff-box" style="display:flex; flex-direction:column;">
+        <div class="diff-header">
+          <span id="fileViewerPath">Select a file to inspect</span>
+          <span id="fileViewerSize" style="font-size:12px; color:var(--text-muted);">--</span>
+        </div>
+        <pre id="fileViewerContent" style="flex:1; padding:16px; margin:0; font-family:var(--font-mono); font-size:13px; color:#d6e2f0; overflow:auto; background:#04060a;"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 6: LIVE SITE PREVIEW (Interactive Split View)
+       ========================================================================= -->
+  <section class="gm-view" id="viewPreview">
+    <div class="preview-layout">
+      <div class="preview-toolbar">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-family:var(--font-mono); font-size:12px; color:var(--neon-emerald);">LIVE PREVIEW:</span>
+          <span style="font-family:var(--font-mono); font-size:12px; color:#fff;" id="previewUrlLabel">http://localhost:3000/</span>
+        </div>
+        <div class="preview-device-group">
+          <button type="button" class="gm-btn" id="btnViewDesktop" title="Desktop view">🖥️ Desktop</button>
+          <button type="button" class="gm-btn" id="btnViewTablet" title="Tablet view">📱 Tablet</button>
+          <button type="button" class="gm-btn" id="btnViewMobile" title="Mobile view">📱 Mobile (375px)</button>
+          <button type="button" class="gm-btn gm-btn-primary" id="btnRefreshPreview">🔄 Reload Site</button>
+        </div>
+      </div>
+
+      <div class="preview-iframe-wrapper">
+        <iframe id="previewIframe" class="preview-iframe device-desktop" src="/" title="Live Website Preview"></iframe>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Settings Modal -->
+<div class="gm-modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div class="gm-modal-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+      <h3 id="settingsTitle" style="font-size:18px; color:#fff;">⚙️ GODMODE AI Configuration</h3>
+      <button type="button" class="gm-btn" id="btnCloseSettings">✕</button>
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:6px;">Google Gemini API Key (Optional)</label>
+      <input type="password" id="inputApiKey" class="chat-input" style="width:100%;" placeholder="AIzaSy... (Leave empty to use built-in Autonomous Engine)">
+      <p style="font-size:12px; color:var(--text-dim); margin-top:6px;">If provided, unlocks cloud reasoning with Gemini 1.5/2.0 Flash. If empty, the high-intelligence Local Autonomous Engine runs all audits, diffs, and code generation out of the box.</p>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+      <button type="button" class="gm-btn" id="btnCancelSettings">Cancel</button>
+      <button type="button" class="gm-btn gm-btn-primary" id="btnSaveSettings">Save Configuration</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/godmode.js" defer></script>
+</body>
+</html>
+

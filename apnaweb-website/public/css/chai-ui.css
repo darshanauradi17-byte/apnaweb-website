@@ -1,0 +1,2450 @@
+/*
+ * @chai-ui/react default styling.
+ *
+ * Requires @chai-ui/tokens/css to be loaded first (it defines every
+ * --chai-* variable referenced below) — see the package README.
+ *
+ * Class names use a `chai-` prefix with BEM-style `__element` and
+ * `--modifier` suffixes, one block per component or primitive.
+ */
+
+@import "@fontsource/roboto/400.css";
+@import "@fontsource/roboto/500.css";
+
+/*
+ * Every switch in the app, locked once here rather than per call site: the
+ * "on" track is the brand green, and the "off" state is plain gray rather
+ * than Material's green-tinted neutrals. All values are Chai tokens.
+ */
+.chai-switch {
+  --md-switch-selected-track-color: var(--chai-color-semantic-accent);
+  --md-switch-selected-hover-track-color: var(--chai-color-semantic-accent);
+  --md-switch-selected-focus-track-color: var(--chai-color-semantic-accent);
+  --md-switch-selected-pressed-track-color: var(--chai-color-semantic-accent);
+  --md-switch-track-color: var(--chai-color-semantic-control-track);
+  --md-switch-hover-track-color: var(--chai-color-semantic-control-track);
+  --md-switch-focus-track-color: var(--chai-color-semantic-control-track);
+  --md-switch-pressed-track-color: var(--chai-color-semantic-control-track);
+  --md-switch-track-outline-color: var(--chai-color-semantic-control-border-soft);
+  --md-switch-hover-track-outline-color: var(--chai-color-semantic-control-border-soft);
+  --md-switch-focus-track-outline-color: var(--chai-color-semantic-control-border-soft);
+  --md-switch-pressed-track-outline-color: var(--chai-color-semantic-control-border-soft);
+  --md-switch-handle-color: var(--chai-color-semantic-control-text-muted);
+  --md-switch-hover-handle-color: var(--chai-color-semantic-control-text-muted);
+  --md-switch-focus-handle-color: var(--chai-color-semantic-control-text-muted);
+  --md-switch-pressed-handle-color: var(--chai-color-semantic-control-text-muted);
+}
+
+/* --- Buttons --- */
+
+.chai-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  /* MD3 buttons are fully-rounded (stadium) by default (m3.material.io/components/buttons). */
+  border-radius: var(--chai-radius-full);
+  border: 1px solid var(--chai-color-semantic-control-border-faint);
+  background: var(--chai-color-semantic-control-surface-raised);
+  color: var(--chai-color-semantic-control-text-strong);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-label-large);
+  font-weight: var(--chai-type-weight-material-medium);
+  line-height: var(--chai-type-leading-label-large);
+  letter-spacing: var(--chai-type-tracking-label-large);
+  cursor: pointer;
+  transition: background var(--chai-motion-duration-fast) var(--chai-motion-easing-standard);
+}
+
+.chai-btn:hover:not(:disabled) {
+  background: var(--chai-color-semantic-control-surface-hover);
+}
+
+.chai-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/*
+ * MD3's outlined button (m3.material.io/components/buttons#outlined-button)
+ * — for actions that matter (they're real, bordered buttons, not links) but
+ * shouldn't compete with the primary action's visual weight. Reads MD3's
+ * own roles rather than CHAI's --chai-color-semantic-* ones, so it stays
+ * visually consistent with the other MD3-native pieces around it.
+ */
+.chai-btn--outlined {
+  background: transparent;
+  border-color: var(--chai-color-semantic-control-border);
+  color: var(--chai-color-semantic-accent-text);
+}
+
+.chai-btn--outlined:hover:not(:disabled) {
+  background: var(--chai-color-semantic-control-surface-hover);
+}
+
+/*
+ * MD3 assist chip (m3.material.io/components/chips#assist-chip) — a
+ * rounded-rectangle, not the stadium shape every `.chai-btn` uses, for
+ * "Select files" specifically (reference: Media Analyze - Default).
+ */
+.chai-chip-button {
+  padding: 6px 14px;
+  border-radius: var(--chai-radius-sm);
+  border: 1px solid var(--chai-color-semantic-control-border);
+  background: var(--chai-color-semantic-control-surface-raised);
+  color: var(--chai-color-semantic-control-text);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-label-large);
+  font-weight: var(--chai-type-weight-material-medium);
+  line-height: var(--chai-type-leading-label-large);
+  letter-spacing: var(--chai-type-tracking-label-large);
+  cursor: pointer;
+}
+
+.chai-chip-button:hover:not(:disabled) {
+  background: var(--chai-color-semantic-control-surface-hover);
+}
+
+.chai-chip-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/*
+ * --- Search menu (reference: Media Analyze - Model Menu) — the shared
+ * searchable-menu-button pattern behind ModelMenu and every other option
+ * menu (see SearchMenu.tsx). A trigger styled like the outlined
+ * "Show options" button, opening a self-positioned panel (not `<md-menu>`'s
+ * own anchor system) with a real `<md-outlined-text-field>` search field
+ * over a hand-rolled option list, same split as SegmentedButton: real MD3
+ * web component where one exists and fits, hand-rolled where the composite
+ * doesn't map onto a single primitive.
+ */
+.chai-search-menu {
+  position: relative;
+}
+
+.chai-search-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 220px;
+  min-width: 0;
+}
+
+/* "text" trigger variant (reference: Composer's Model/Aspect ratio triggers
+   — outline hidden) — label + trailing chevron only, no border/fill at
+   rest. Generous padding (not the base rule's tight `max-width` alone) so
+   the label's last character has real breathing room before the chevron,
+   and a real border-radius so the hover/open state below reads as a
+   rounded rectangle, not a hard-cornered box. */
+.chai-search-menu__trigger--text {
+  padding: 6px 10px;
+  border: none;
+  border-radius: var(--chai-radius-sm);
+  background: transparent;
+  color: var(--chai-color-semantic-control-text-strong);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-label-large);
+  font-weight: var(--chai-type-weight-material-medium);
+  line-height: var(--chai-type-leading-label-large);
+  letter-spacing: var(--chai-type-tracking-label-large);
+  cursor: pointer;
+  transition: background var(--chai-motion-duration-fast) var(--chai-motion-easing-standard);
+}
+
+.chai-search-menu__trigger--text:hover:not(:disabled) {
+  background: var(--chai-color-semantic-control-surface-hover);
+}
+
+.chai-search-menu__trigger--text:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* A selected model's label (e.g. a long OpenRouter model name) is capped and
+   ellipsized here rather than left to grow the trigger — otherwise it can
+   push wide enough to overlap the card's right-aligned "Show options" /
+   "Generate" actions instead of wrapping under `chai-component-card__actions`'
+   flex-wrap. */
+.chai-search-menu__trigger-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.chai-search-menu__trigger--open {
+  background: var(--chai-color-semantic-accent-subtle);
+  border-color: var(--chai-color-semantic-accent-subtle);
+  color: var(--chai-color-semantic-accent-text);
+}
+
+.chai-search-menu__chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--chai-motion-duration-fast) var(--chai-motion-easing-standard);
+}
+
+.chai-search-menu__chevron--open {
+  transform: rotate(180deg);
+}
+
+.chai-search-menu__panel {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 280px;
+  /* On a narrow phone, never wider than the screen less a margin. */
+  max-width: calc(100vw - 32px);
+  padding: var(--chai-space-3);
+  border-radius: var(--chai-radius-lg);
+  /* White per Figma (reference: every dropdown menu, Model + Generator). */
+  background: var(--chai-color-semantic-control-surface-raised);
+  box-shadow: var(--chai-shadow-menu);
+  display: flex;
+  flex-direction: column;
+  gap: var(--chai-space-2);
+}
+
+.chai-search-menu__search {
+  width: 100%;
+}
+
+.chai-search-menu__search-icon {
+  display: flex;
+}
+
+.chai-search-menu__search svg {
+  width: 20px;
+  height: 20px;
+}
+
+.chai-search-menu__clear {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+}
+
+.chai-search-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.chai-search-menu__option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: var(--chai-radius-sm);
+  background: transparent;
+  color: var(--chai-color-semantic-control-text-strong);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-body-large);
+  text-align: left;
+  cursor: pointer;
+}
+
+.chai-search-menu__option:hover:not(:disabled) {
+  background: var(--chai-color-semantic-control-surface-hover);
+}
+
+.chai-search-menu__option--selected {
+  color: var(--chai-color-semantic-accent-text);
+  font-weight: var(--chai-type-weight-material-medium);
+}
+
+/* Grayed + inert while a `toggleHeader` is on (reference: the account
+   holder's own "Auto-select model" mock) — the row that matches `value`
+   keeps its checkmark regardless, so the underlying manual pick stays
+   visible even though it can't be changed until the toggle goes off. */
+.chai-search-menu__option:disabled {
+  /* MD3's disabled-content spec (on-surface at 38%) — the muted text token
+     alone read almost the same as an enabled row. */
+  color: color-mix(in srgb, var(--chai-color-semantic-control-text-strong) 38%, transparent);
+  cursor: not-allowed;
+}
+
+.chai-search-menu__option:disabled.chai-search-menu__option--selected {
+  color: color-mix(in srgb, var(--chai-color-semantic-control-text-strong) 38%, transparent);
+  font-weight: var(--chai-type-weight-material-regular);
+}
+
+/* Long option labels (a full model name, at this menu's default width)
+   ellipsize instead of wrapping or pushing the checkmark out of view. */
+.chai-search-menu__option-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Multi-select's leading checkbox: display only, so clicks land on the
+   row button that owns selection. */
+.chai-search-menu__checkbox {
+  flex: none;
+  pointer-events: none;
+}
+
+.chai-search-menu__option svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+/*
+ * Toggle header (reference: the design note "Auto-select model"
+ * mock) — an MD3 outlined-field look built by hand (the notched-outline
+ * trick: an absolutely-positioned label with the panel's own background
+ * masks the border behind it) rather than a real `<md-outlined-text-field>`,
+ * since this needs a switch inside it, not text input.
+ */
+.chai-search-menu__toggle-header {
+  position: relative;
+  margin-bottom: var(--chai-space-2);
+  padding: var(--chai-space-3);
+  border: 1px solid var(--chai-color-semantic-control-border);
+  border-radius: var(--chai-radius-sm);
+}
+
+.chai-search-menu__toggle-header-label {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  transform: translateY(-50%);
+  padding: 0 4px;
+  background: var(--chai-color-semantic-control-surface-raised);
+  color: var(--chai-color-semantic-accent-text);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-label-small);
+  letter-spacing: var(--chai-type-tracking-label-small);
+}
+
+.chai-search-menu__toggle-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--chai-space-3);
+}
+
+.chai-search-menu__toggle-header-text {
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-body-large);
+  font-weight: var(--chai-type-weight-material-medium);
+  color: var(--chai-color-semantic-control-text-strong);
+}
+
+.chai-search-menu__empty {
+  padding: 10px 12px;
+  color: var(--chai-color-semantic-control-text);
+  font-size: var(--chai-type-size-sm);
+}
+
+/* Grouped sections (reference: Media Analyzer's "Select model" menu —
+   Image/Video/Audio) — a plain heading + divider, not a new visual
+   language: `&__option`'s own rules still apply inside `&__section-list`. */
+.chai-search-menu__section-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chai-search-menu__section-label {
+  margin: 0;
+  padding: 8px 12px 4px;
+  color: var(--chai-color-semantic-control-text);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-label-small);
+  font-weight: var(--chai-type-weight-material-medium);
+  letter-spacing: var(--chai-type-tracking-label-small);
+  text-transform: uppercase;
+}
+
+.chai-search-menu__divider {
+  margin: var(--chai-space-2) 0;
+  border: none;
+  border-top: 1px solid var(--chai-color-semantic-control-divider);
+}
+
+@keyframes chai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+ * --- Pagination (primitives/Pagination.tsx) ---
+ * Progress-style pager (reference: the Figma "Pagination" asset) — a pill
+ * that fills from page 1 up to whichever page is current, not independent
+ * per-page dots. Matches the mockup's own dot graphic, which is a
+ * rounded-rect fill growing under plain circles, not a row of
+ * self-contained badges.
+ */
+.chai-pagination {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  border-radius: var(--chai-radius-full);
+  cursor: pointer;
+}
+
+.chai-pagination--disabled {
+  cursor: not-allowed;
+}
+
+.chai-pagination:focus-visible {
+  outline: 2px solid var(--chai-color-semantic-accent);
+  outline-offset: 2px;
+}
+
+/* The pill is 16px tall, centred on the 24px-tall row. */
+.chai-pagination__track {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: var(--chai-pagination-fill, 0%);
+  /* Chai UI's actual primary green — the same token `.chai-btn--primary`
+     and the selected Accept segment fill with — not `accent-strong`, which
+     is the darker shade reserved for text-on-light-bg contexts. */
+  background: var(--chai-color-semantic-accent);
+  border-radius: var(--chai-radius-full);
+  transition: width var(--chai-motion-duration-base) var(--chai-motion-easing-standard);
+}
+
+/* Each dot is a 16px cell drawing a 6px dot at its centre, so the dots sit
+   16px apart. The whole row is one control, 24px tall, so it meets WCAG
+   2.2's target size (2.5.8) without each dot having to. */
+.chai-pagination__dot {
+  position: relative;
+  width: 16px;
+  height: 24px;
+}
+
+.chai-pagination__dot::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--chai-color-semantic-control-border-faint);
+}
+
+.chai-pagination__dot--filled::before {
+  background: var(--chai-color-semantic-text-on-accent);
+}
+
+/*
+ * --- Composer (bar layout) ---
+ * Reference: the "Compose Component" design. Its flat cool gray comes from the control-* semantic tokens, and
+ * the --chai-composer-* properties below are the per-component hooks for
+ * restyling it.
+ */
+.chai-composer {
+  --chai-composer-bg: var(--chai-color-semantic-control-surface);
+  --chai-composer-border: var(--chai-color-semantic-control-border);
+  --chai-composer-placeholder: var(--chai-color-semantic-control-text-muted);
+  --chai-composer-text: var(--chai-color-semantic-control-text);
+  /* Every hover/open state in this component. */
+  --chai-composer-hover: var(--chai-color-semantic-control-surface-hover);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--chai-space-3);
+  padding: var(--chai-space-4) var(--chai-space-5);
+  /* Bespoke pill radius, doesn't match the --chai-radius-* scale (max lg
+     is 16px) — this container is meant to read rounder than any existing
+     card. */
+  border-radius: 22px;
+  border: 1px solid var(--chai-composer-border);
+  background: var(--chai-composer-bg);
+  font-family: var(--chai-type-family-material);
+}
+
+.chai-composer__thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--chai-space-3);
+}
+
+.chai-composer__thumb {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  flex: none;
+  border-radius: var(--chai-radius-sm);
+  border: 1px solid var(--chai-color-semantic-control-divider);
+  background: var(--chai-composer-bg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chai-composer__thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chai-composer__thumb-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--chai-composer-placeholder);
+}
+
+.chai-composer__thumb-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hidden until the thumbnail is hovered/focused, same treatment as the
+   use-case chip's own remove button. */
+.chai-composer__thumb-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--chai-radius-full);
+  background: var(--chai-color-semantic-overlay);
+  color: var(--chai-color-semantic-on-overlay);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--chai-motion-duration-fast) var(--chai-motion-easing-standard);
+}
+
+.chai-composer__thumb:hover .chai-composer__thumb-remove,
+.chai-composer__thumb:focus-within .chai-composer__thumb-remove {
+  opacity: 1;
+}
+
+/* Touch screens can't hover, so the remove button always shows. */
+@media (hover: none) {
+  .chai-composer__thumb-remove {
+    opacity: 1;
+  }
+}
+
+.chai-composer__thumb-remove svg {
+  width: 14px;
+  height: 14px;
+}
+
+.chai-composer__field {
+  position: relative;
+  display: flex;
+}
+
+/* Shared by the real `<textarea>` and its reveal-overlay `<div>` (below) —
+   one source for the font/padding rules that must match exactly for the
+   overlay's text to sit pixel-for-pixel on top of the real thing, rather
+   than two copies that could quietly drift apart. */
+.chai-composer__type {
+  padding: 0;
+  /* Clears the optimize button's full 40px hit box (see its own comment)
+     plus real breathing room — at the old 36px, typed text ran right up
+     against the icon before wrapping. */
+  padding-right: 56px;
+  overflow-wrap: break-word;
+  font-family: var(--chai-type-family-material);
+  /* Body Large, not the mock's own literal Title Large spec (22px) — reads
+     noticeably heavy/large once actually rendered live, a direct design correction over the original Figma value. */
+  font-size: var(--chai-type-size-body-large);
+  font-weight: var(--chai-type-weight-material-regular);
+  line-height: var(--chai-type-leading-body-large);
+  letter-spacing: var(--chai-type-tracking-body-large);
+}
+
+.chai-composer__input {
+  flex: 1;
+  resize: none;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: var(--chai-composer-text);
+}
+
+.chai-composer__input::placeholder {
+  color: var(--chai-composer-placeholder);
+}
+
+.chai-composer__input:disabled {
+  opacity: 0.6;
+}
+
+/* Create world's two prompts, side by side (stacked when narrow): each a
+   label and its own Enhance button above a filled box. */
+.chai-composer__world-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--chai-space-4);
+}
+
+.chai-composer__world-field {
+  flex: 1 1 240px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--chai-space-2);
+}
+
+.chai-composer__world-field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+}
+
+.chai-composer__world-field-label {
+  font-size: var(--chai-type-size-xs);
+  font-weight: var(--chai-type-weight-material-medium);
+  line-height: var(--chai-type-leading-label-small);
+  letter-spacing: var(--chai-type-tracking-label-small);
+  color: var(--chai-color-semantic-control-text-strong);
+}
+
+.chai-composer__world-field-label strong {
+  font-weight: var(--chai-type-weight-semibold);
+}
+
+/* In the heading row, not over the text: no absolute position. */
+.chai-composer__world-field-head .chai-composer__optimize {
+  position: static;
+  width: 24px;
+}
+
+.chai-composer__field--boxed {
+  min-height: 144px;
+  padding: var(--chai-space-3);
+  border-radius: var(--chai-radius-md);
+  background: var(--chai-color-semantic-control-field);
+}
+
+/* Smaller text than the bar's prompt, and no room kept for an Enhance button. */
+.chai-composer__field--boxed .chai-composer__type {
+  padding-right: 0;
+  font-size: var(--chai-type-size-body-medium);
+  line-height: var(--chai-type-leading-body-medium);
+  letter-spacing: var(--chai-type-tracking-body-medium);
+}
+
+/* Why submit can't go yet (a world with no environment). */
+.chai-composer__field-hint {
+  margin: 0;
+  font-size: var(--chai-type-size-xs);
+  line-height: var(--chai-type-leading-label-small);
+  letter-spacing: var(--chai-type-tracking-label-small);
+  color: var(--chai-composer-placeholder);
+}
+
+.chai-composer__field--boxed .chai-composer__reveal {
+  inset: var(--chai-space-3);
+}
+
+/* The optimize/undo reveal (Composer.tsx's own doc comment on the overlay
+   for the full mechanics) — the real textarea's text goes fully
+   transparent so only the overlay's progressive, gradient-lit copy shows
+   underneath it, not both at once. */
+.chai-composer__input--revealing {
+  color: transparent;
+}
+
+.chai-composer__reveal {
+  position: absolute;
+  inset: 0;
+  white-space: pre-wrap;
+  pointer-events: none;
+}
+
+.chai-composer__reveal-text {
+  background: var(--chai-gradient-ai);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: chai-composer-reveal-shimmer 1.4s linear infinite;
+}
+
+@keyframes chai-composer-reveal-shimmer {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 300% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chai-composer__reveal-text {
+    animation: none;
+  }
+}
+
+/* Width matches `<md-fab size="small">`'s own container width (MD3 spec:
+   40px) so the icon centers over the submit FAB below it, not over this
+   button's own (much narrower) hit target — same right edge, different
+   widths, was reading visibly off-center from the FAB's icon. */
+.chai-composer__optimize {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--chai-composer-text);
+  cursor: pointer;
+}
+
+.chai-composer__optimize svg {
+  width: 24px;
+  height: 24px;
+}
+
+.chai-composer__optimize:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.chai-composer__optimize:hover:not(:disabled),
+.chai-composer__optimize--active {
+  /* The traced Optimize icon's "active" fill: the brand green. */
+  color: var(--chai-color-semantic-accent);
+}
+
+.chai-composer__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--chai-space-3);
+}
+
+.chai-composer__controls-start {
+  display: flex;
+  align-items: center;
+  gap: var(--chai-space-3);
+  flex-wrap: wrap;
+}
+
+/* Neutral trigger text, not `--md-sys-color-primary` green (account
+   holder correction: "don't make dropdown select menu buttons green when
+   they don't need to be"). */
+.chai-composer .chai-search-menu__trigger {
+  color: var(--chai-composer-text);
+}
+
+/* The shared `--trigger--open` rule fills with `--md-sys-color-secondary-
+   container` (brand green) — right for Model/Actions menus elsewhere, but
+   this component is deliberately neutral throughout (see the container
+   comment at the top of this section), so the open state here stays a
+   plain rounded-rectangle highlight instead. */
+.chai-composer .chai-search-menu__trigger--open {
+  background: var(--chai-composer-hover);
+  border-color: transparent;
+  color: var(--chai-composer-text);
+}
+
+.chai-composer .chai-search-menu__trigger--text:hover:not(:disabled) {
+  background: var(--chai-composer-hover);
+}
+
+.chai-composer__attach {
+  position: relative;
+}
+
+.chai-composer__attach-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: var(--chai-radius-full);
+  background: transparent;
+  color: var(--chai-composer-text);
+  cursor: pointer;
+}
+
+.chai-composer__attach-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+
+.chai-composer__attach-toggle--open {
+  background: var(--chai-composer-hover);
+}
+
+.chai-composer__attach-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.chai-composer__attach-menu {
+  position: absolute;
+  z-index: 10;
+  bottom: calc(100% + 8px);
+  left: 0;
+  min-width: 180px;
+  margin: 0;
+  padding: var(--chai-space-2) 0;
+  list-style: none;
+  border-radius: var(--chai-radius-sm);
+  background: var(--chai-color-semantic-control-surface-raised);
+  box-shadow: var(--chai-shadow-menu);
+}
+
+.chai-composer__attach-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--chai-space-3);
+  width: 100%;
+  padding: var(--chai-space-2) var(--chai-space-4);
+  border: none;
+  background: transparent;
+  color: var(--chai-color-semantic-control-text-strong);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-label-large);
+  font-weight: var(--chai-type-weight-material-medium);
+  line-height: var(--chai-type-leading-label-large);
+  letter-spacing: var(--chai-type-tracking-label-large);
+  text-align: left;
+  cursor: pointer;
+}
+
+.chai-composer__attach-menu-item:hover {
+  background: var(--chai-composer-hover);
+}
+
+.chai-composer__attach-menu-icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  color: var(--chai-color-semantic-control-text);
+}
+
+.chai-composer__attach-menu-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Reference: "Add media" (`MenuListItem1`) is the only item with a divider
+   under it in the source (`showDivider: true`), separating the real
+   attach action from the three generation-mode actions below it. */
+.chai-composer__attach-menu-divider {
+  margin: var(--chai-space-2) 0;
+  border: none;
+  border-top: 1px solid var(--chai-color-semantic-control-divider);
+}
+
+/* Hand-rolled use-case chip (see `UseCaseChip`'s own comment for why this
+   isn't `<md-input-chip>`) — rounded square, not MD3 input chip's stadium
+   default, no leading icon (that's the attach-menu's own affordance, not
+   the chip's — see `UseCaseChip`). No `gap` here (unlike other rows in
+   this component) — the remove button's own width/margin do that job
+   instead, collapsed to 0 at rest so the chip is genuinely narrower by
+   default, not just hiding an already-reserved slot; hovering (or
+   focusing) the chip expands it to reveal the button, rather than fading
+   an icon in place. */
+.chai-composer__chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: var(--chai-radius-sm);
+  border: 1px solid var(--chai-composer-border);
+  background: var(--chai-composer-bg);
+  color: var(--chai-composer-text);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-label-large);
+  font-weight: var(--chai-type-weight-material-medium);
+  line-height: var(--chai-type-leading-label-large);
+  letter-spacing: var(--chai-type-tracking-label-large);
+  white-space: nowrap;
+  transition: background var(--chai-motion-duration-fast) var(--chai-motion-easing-standard);
+}
+
+.chai-composer__chip:hover {
+  background: var(--chai-composer-hover);
+}
+
+.chai-composer__chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 16px;
+  margin-left: 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--chai-radius-full);
+  background: transparent;
+  color: var(--chai-composer-text);
+  cursor: pointer;
+  opacity: 0;
+  overflow: hidden;
+  flex: none;
+  transition:
+    width var(--chai-motion-duration-fast) var(--chai-motion-easing-standard),
+    margin-left var(--chai-motion-duration-fast) var(--chai-motion-easing-standard),
+    opacity var(--chai-motion-duration-fast) var(--chai-motion-easing-standard);
+}
+
+.chai-composer__chip-remove svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.chai-composer__chip:hover .chai-composer__chip-remove,
+.chai-composer__chip:focus-within .chai-composer__chip-remove {
+  width: 16px;
+  margin-left: 6px;
+  opacity: 1;
+}
+
+.chai-composer__chip-remove:disabled {
+  cursor: not-allowed;
+}
+
+/* Edit regions, above the prompt field: each chip in its region's color
+   (set inline as --chai-region-color), with the numbered badge that marks
+   the same region on the image. */
+.chai-composer__regions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--chai-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chai-composer__chip--region {
+  gap: 6px;
+  padding-left: 6px;
+  border-color: var(--chai-region-color);
+}
+
+.chai-composer__region-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: var(--chai-radius-full);
+  background: var(--chai-region-color);
+  color: var(--chai-color-semantic-text-on-accent);
+  font-size: var(--chai-type-size-label-small);
+  line-height: 1;
+}
+
+.chai-composer__submit {
+  flex: none;
+  /* Flat always, both states — the mock has no FAB shadow at all. */
+  --md-fab-container-elevation: 0;
+  --md-fab-hover-container-elevation: 0;
+  --md-fab-pressed-container-elevation: 0;
+  --md-fab-focus-container-elevation: 0;
+}
+
+/* Unfilled rest state — icon only, no visible container, until there's a
+   valid prompt. Not M3's "surface" variant: a green-seeded theme's own
+   surface containers still pick up a faint tint from dynamic color, so
+   overriding the secondary-variant custom properties directly was the only
+   way to get a genuinely flat rest state. MD3's own hover state layer
+   (unaffected by these overrides) still gives the "slight color change on
+   hover" the mock wants, with no extra rule needed. Once `[data-ready]` is
+   set, neither override applies and `<md-fab>`'s real `variant="secondary"`
+   colors (the brand-green bridge) show through on their own. */
+.chai-composer__submit:not([data-ready]) {
+  --md-fab-secondary-container-color: transparent;
+  --md-fab-secondary-icon-color: var(--chai-composer-text);
+}
+
+/* Retry state — real `--chai-color-semantic-danger*` tokens, not this
+   component's own literal-hex palette: unlike the neutral chrome, an
+   error should look the same "error" everywhere in the app, not just in
+   Composer. `[data-error]` can co-occur with `[data-ready]` (retry isn't
+   gated on `hasContent`, see `submitError`'s doc comment), so this rule
+   is scoped only to `[data-error]` and always wins when it's set. */
+.chai-composer__submit[data-error] {
+  --md-fab-secondary-container-color: var(--chai-color-semantic-danger-subtle);
+  --md-fab-secondary-icon-color: var(--chai-color-semantic-danger);
+}
+
+/* Stop state — real `--chai-color-semantic-warning*` tokens (a light
+   orange), same reasoning as `[data-error]` above: reuses an existing
+   system color rather than inventing a one-off literal hex for this one
+   moment. Declared before `[data-error]` so error still wins if both were
+   ever true (they aren't, in practice — a request is either in flight or
+   already failed, never both), matching that rule's own documented
+   precedence. */
+.chai-composer__submit[data-stop] {
+  --md-fab-secondary-container-color: var(--chai-color-semantic-warning-subtle);
+  --md-fab-secondary-icon-color: var(--chai-color-semantic-warning);
+}
+
+.chai-composer__error {
+  display: flex;
+  align-items: center;
+  gap: var(--chai-space-2);
+  margin: 0;
+  padding: 2px 2px 0;
+  color: var(--chai-color-semantic-danger);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-label-large);
+  font-weight: var(--chai-type-weight-material-medium);
+  line-height: var(--chai-type-leading-label-large);
+  letter-spacing: var(--chai-type-tracking-label-large);
+}
+
+.chai-composer__error svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+/*
+ * --- Media Analyzer (reference: the "Composer from Media Analysis" design)
+ * — same treatment as `.chai-composer` above, with the
+ * exact same container/border/radius values, since the mock reuses them.
+ */
+.chai-media-analyzer {
+  --chai-media-analyzer-bg: var(--chai-color-semantic-control-surface);
+  --chai-media-analyzer-border: var(--chai-color-semantic-control-border);
+  --chai-media-analyzer-text: var(--chai-color-semantic-control-text);
+  --chai-media-analyzer-hover: var(--chai-color-semantic-control-surface-hover);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--chai-space-3);
+  padding: var(--chai-space-4) var(--chai-space-5);
+  border-radius: 22px;
+  border: 1px solid var(--chai-media-analyzer-border);
+  background: var(--chai-media-analyzer-bg);
+  font-family: var(--chai-type-family-material);
+}
+
+.chai-media-analyzer__dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--chai-space-2);
+  min-height: 140px;
+  padding: var(--chai-space-4);
+  border-radius: var(--chai-radius-md);
+  border: 1.5px dashed var(--chai-color-semantic-control-text-strong);
+  /* Brand-green wash, same token `.chai-drop-zone` reads for the same
+     reason (see that rule's own comment) — this dashed box is this
+     component's equivalent surface. */
+  background: var(--chai-color-semantic-accent-subtle);
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--chai-motion-duration-fast) var(--chai-motion-easing-standard),
+    border-color var(--chai-motion-duration-fast) var(--chai-motion-easing-standard);
+}
+
+/* At cap for the attached kind (reference: "Analyze Media Composer -
+   Disabled - Maximum Media Attached") — flat gray, not a dimmed green
+   (mixing "disabled" with the brand wash read as broken, not intentional).
+   Still a real drop target for a *different* kind, which always replaces
+   what's here — see MediaAnalyzer.tsx's `nextMediaAnalyzerAttachments` for
+   why this never fully disables the zone itself, only the same-kind add. */
+.chai-media-analyzer__dropzone--disabled {
+  background: var(--chai-color-semantic-control-surface-hover);
+  cursor: default;
+}
+
+/* A file is being dragged over the zone but not dropped yet — there was no
+   feedback at all for this before (the box looked identical whether or not
+   a drag was even over it). Solid border + a visibly darker green than the
+   dashed zone's own resting wash, so "this is a live drop target right
+   now" reads clearly regardless of whether the zone is also at cap (a
+   drag-over can still be a valid cross-kind replace even then, so this
+   wins over `--disabled`'s gray — see the design note on
+   the drop zone always accepting a different kind). */
+.chai-media-analyzer__dropzone--drag-active,
+.chai-media-analyzer__dropzone--disabled.chai-media-analyzer__dropzone--drag-active {
+  border-style: solid;
+  border-color: var(--chai-color-semantic-accent);
+  background: var(--chai-color-semantic-accent-soft);
+}
+
+.chai-media-analyzer__dropzone-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--chai-color-semantic-control-text);
+}
+
+.chai-media-analyzer__dropzone-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.chai-media-analyzer__dropzone-hint {
+  margin: 0;
+  font-size: var(--chai-type-size-body-medium);
+  font-weight: var(--chai-type-weight-material-regular);
+  color: var(--chai-media-analyzer-text);
+}
+
+.chai-media-analyzer__thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--chai-space-2);
+}
+
+/* Same shape/behavior as `.chai-composer__thumb`, sized down (56px, not
+   88px) so all 5 of an image analysis's maximum fit in one row under the
+   drag box at typical card widths (reference: the design
+   spec — "slightly smaller to fit a total of five image thumbs"). */
+.chai-media-analyzer__thumb {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex: none;
+  border-radius: var(--chai-radius-sm);
+  border: 1px solid var(--chai-color-semantic-control-divider);
+  background: var(--chai-media-analyzer-bg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chai-media-analyzer__thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chai-media-analyzer__thumb-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--chai-media-analyzer-text);
+}
+
+.chai-media-analyzer__thumb-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.chai-media-analyzer__thumb-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--chai-radius-full);
+  /* Darker + fully opaque (was translucent black) — against a busy photo
+     thumbnail a semi-transparent badge let the image show through and
+     washed out the X on top of it. A solid, near-black circle is what
+     actually gives the white X reliable contrast in every case. */
+  background: var(--chai-color-semantic-overlay);
+  color: var(--chai-color-semantic-on-overlay);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--chai-motion-duration-fast) var(--chai-motion-easing-standard);
+}
+
+.chai-media-analyzer__thumb:hover .chai-media-analyzer__thumb-remove,
+.chai-media-analyzer__thumb:focus-within .chai-media-analyzer__thumb-remove {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .chai-media-analyzer__thumb-remove {
+    opacity: 1;
+  }
+}
+
+/* Still tiny in absolute terms (a corner badge on a 56px thumbnail can only
+   be so big), but the X itself should read as a solid mark, not a hairline
+   — reference: the design note "more legible" example, a chunky
+   X that fills most of the circle rather than a thin one centered in a lot
+   of empty padding. Both the icon's own size *and* its `strokeWidth`
+   (RemoveIcon, MediaAnalyzer.tsx) went up together — bumping only one or
+   the other still read as too delicate at this size. */
+.chai-media-analyzer__thumb-remove svg {
+  width: 14px;
+  height: 14px;
+}
+
+.chai-media-analyzer__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--chai-space-3);
+}
+
+.chai-media-analyzer__controls-start {
+  display: flex;
+  align-items: center;
+  gap: var(--chai-space-2);
+  flex-wrap: wrap;
+}
+
+/* Neutral trigger text/open-state, not the shared rule's brand-green fill —
+   same correction `.chai-composer` already applies to its own SearchMenu
+   triggers, for the same reason (see that rule's own comment). */
+.chai-media-analyzer .chai-search-menu__trigger {
+  color: var(--chai-media-analyzer-text);
+}
+
+.chai-media-analyzer .chai-search-menu__trigger--open {
+  background: var(--chai-media-analyzer-hover);
+  border-color: transparent;
+  color: var(--chai-media-analyzer-text);
+}
+
+.chai-media-analyzer .chai-search-menu__trigger--text:hover:not(:disabled) {
+  background: var(--chai-media-analyzer-hover);
+}
+
+.chai-media-analyzer__submit {
+  flex: none;
+  --md-fab-container-elevation: 0;
+  --md-fab-hover-container-elevation: 0;
+  --md-fab-pressed-container-elevation: 0;
+  --md-fab-focus-container-elevation: 0;
+}
+
+/* Unfilled until there's at least one attachment to submit — same reasoning
+   as `.chai-composer__submit:not([data-ready])`. */
+.chai-media-analyzer__submit:not([data-ready]) {
+  --md-fab-secondary-container-color: transparent;
+  --md-fab-secondary-icon-color: var(--chai-media-analyzer-text);
+}
+
+/* While analyzing, with `onAbort`: submit becomes stop, same as the Composer's.
+   Before `[data-error]`, so an error still wins. */
+.chai-media-analyzer__submit[data-stop] {
+  --md-fab-secondary-container-color: var(--chai-color-semantic-warning-subtle);
+  --md-fab-secondary-icon-color: var(--chai-color-semantic-warning);
+}
+
+.chai-media-analyzer__submit[data-error] {
+  --md-fab-secondary-container-color: var(--chai-color-semantic-danger-subtle);
+  --md-fab-secondary-icon-color: var(--chai-color-semantic-danger);
+}
+
+/* What the last attach replaced (one kind per analysis). */
+.chai-media-analyzer__note {
+  margin: 0;
+  padding: 2px 2px 0;
+  color: var(--chai-media-analyzer-text);
+  font-size: var(--chai-type-size-label-large);
+}
+
+.chai-media-analyzer__error {
+  margin: 0;
+  padding: 2px 2px 0;
+  color: var(--chai-color-semantic-danger);
+  font-size: var(--chai-type-size-label-large);
+  font-weight: var(--chai-type-weight-material-medium);
+}
+
+/*
+ * --- Result Card (reference: Figma "08 Result from Composer Bar", node
+ * 194:1695) — Composer bar's compliment. Literal hex again (not
+ * --chai- or --md-sys-color- tokens) for the card chrome itself, same
+ * "green-seeded theme tints everything neutral" reason `.chai-composer`'s
+ * own container comment documents; chips/menus underneath still read real
+ * MD3 tokens since those aren't large flat fills.
+ */
+
+/* A fixed default width (375px, matching the Figma mock), not sized off
+   the source media's own pixel dimensions — design
+   correction: letting the card's *width* track a real generated image's
+   actual resolution would make the card's footprint unpredictable
+   (anywhere from a couple hundred px to several thousand) and break the
+   layout of whatever app it's embedded in. The *height* still isn't
+   fixed: the media inside renders at `width: 100%; height: auto` (its own
+   comment below), so at this one fixed width, height naturally follows
+   whatever the real aspect ratio is — a 4:3 image lands close to the
+   Figma mock's own ~335px total card height, 1:1 taller, 16:9 shorter,
+   with no special-casing needed per ratio. This is the actual "thumbnail"
+   behavior (scaled down, never cropped) — the "Expand" button is what
+   shows the real, full-size media when someone needs it. A `width` prop
+   overrides the 375px default for a builder who wants a different fixed
+   footprint. */
+.chai-result-card {
+  width: var(--chai-result-card-width, 375px);
+  max-width: 100%;
+  perspective: 1800px;
+  font-family: var(--chai-type-family-material);
+}
+
+/* The *front* (the media) is what establishes the card's height — normal
+   block flow, no special positioning, so `.inner`'s own auto height is
+   just "whatever `.front`'s natural content needs." The *back* (info
+   side) is `position: absolute; inset: 0` and simply conforms to
+   whatever height that resolves to, scrolling its own prompt box
+   internally if its content needs more room than the media provided.
+   Deliberately not symmetric ("taller of the two, either stretches to
+   match") — a design correction: a media-driven card
+   flipping to a shorter or differently-proportioned info side read as
+   visually inconsistent, and media should stay the one source of truth
+   for the card's height in both states. `.back` being absolute doesn't
+   reintroduce the old circular-sizing problem (`position: absolute` on
+   *both* faces once tried and reverted) because only one side of that
+   circle exists now — `.front` is never absolute, so it always has a
+   real, independently-computed height for `.back` to match. */
+.chai-result-card__inner {
+  position: relative;
+  width: 100%;
+  transition: transform var(--chai-motion-duration-slow) var(--chai-motion-easing-standard);
+  transform-style: preserve-3d;
+}
+
+.chai-result-card--flipped .chai-result-card__inner {
+  transform: rotateY(180deg);
+}
+
+.chai-result-card__face {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  backface-visibility: hidden;
+  border-radius: 29px;
+  border: 1px solid var(--chai-color-semantic-control-border-soft);
+  overflow: hidden;
+}
+
+/* The media fills the face, with the controls floating over its bottom
+   (see "Floating card controls"). `--chai-card-bottom-clear` is how much of
+   the bottom they cover, for content that must stay clear of them. */
+.chai-result-card__front {
+  --chai-card-bottom-clear: 56px;
+  position: relative;
+  background: var(--chai-color-semantic-control-surface);
+  /* `.back` is later in DOM order and stacks above `.front` regardless of
+     which face is currently rotated toward the viewer (sibling stacking
+     order doesn't reorder itself just because `backface-visibility` hides
+     paint) — so without this, `.back`'s own hidden-but-still-present box
+     can swallow clicks meant for `.front` in some engines. Pointer-events
+     are switched explicitly per face instead of trusting
+     `backface-visibility: hidden` to also gate hit-testing. */
+  pointer-events: auto;
+}
+
+.chai-result-card--flipped .chai-result-card__front {
+  pointer-events: none;
+}
+
+.chai-result-card__back {
+  position: absolute;
+  inset: 0;
+  background: var(--chai-color-semantic-control-surface-raised);
+  transform: rotateY(180deg);
+  padding: var(--chai-space-5) var(--chai-space-4) var(--chai-space-4);
+  gap: var(--chai-space-3);
+  pointer-events: none;
+}
+
+.chai-result-card--flipped .chai-result-card__back {
+  pointer-events: auto;
+}
+
+/* --- Media (image/video/audio/text, by status) ---
+ * `flex: 1` here is only a graceful-overflow behavior, not a fixed size:
+ * with no explicit height anywhere in this chain, the media area's own
+ * natural size already comes from its image/video content below (`width:
+ * 100%; height: auto`, no `object-fit` cropping/letterboxing needed) — it
+ * only actually stretches on the rarer occasion the *other* face (the
+ * flipped info side) is naturally taller, since both faces share one grid
+ * track sized to the taller one (`.chai-result-card__inner`'s own
+ * comment). When that happens the extra height lands here as breathing
+ * room around a still-centered, still-unstretched image, not a fixed gray
+ * box the image sits inside by default.
+ */
+/* Holds the paging slide: clips the page sliding out, and passes the face's
+   column layout through so the media still sizes as before. */
+.chai-result-card__media-frame,
+.chai-result-card__media-page {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chai-result-card__media-frame {
+  overflow: hidden;
+}
+
+.chai-result-card__media {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--chai-color-semantic-control-surface);
+  overflow: hidden;
+}
+
+/* Queued/running/error/audio/text have no image of their own to derive a
+   natural size from, so they get one fixed reasonable height instead of
+   collapsing to near-zero. */
+.chai-result-card__media--fixed-height,
+.chai-result-card__media--pending,
+.chai-result-card__media--error,
+.chai-result-card__media--cancelled {
+  min-height: 220px;
+  padding: var(--chai-space-5);
+  /* Text, audio and status messages end above the floating controls. */
+  padding-bottom: var(--chai-card-bottom-clear);
+}
+
+/* The floating votes and details sit above the pager bar. */
+.chai-result-card__front--paginated .chai-card-bottom {
+  bottom: calc(var(--chai-card-pager-bar) + 12px);
+}
+
+/* A sibling of `.chai-result-card` itself, not a descendant — see the
+   overlay's own comment in ResultCard.tsx (`perspective` on the card, set
+   for the flip animation, would otherwise trap `position: fixed` inside
+   the card's own box instead of the real viewport). */
+.chai-result-card__expand-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chai-result-card__expand-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--chai-color-semantic-scrim);
+}
+
+.chai-result-card__expand-frame {
+  position: relative;
+  z-index: 1;
+  width: min(90vw, 960px);
+  height: min(80vh, 540px);
+  border-radius: var(--chai-radius-lg);
+  overflow: hidden;
+  background: var(--chai-color-semantic-media-backdrop);
+}
+
+.chai-result-card__expand-frame .chai-result-card__video,
+.chai-result-card__expand-frame .chai-result-card__image {
+  /* The frame itself is a fixed box (unlike the inline card, which sizes
+     to the media) — `object-fit: contain` here is what keeps a portrait
+     or unusually-shaped image/video from overflowing it, height: 100%
+     instead of auto since auto would size off the media's own aspect
+     ratio again and could exceed the frame's fixed height. */
+  height: 100%;
+  object-fit: contain;
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+
+/* No `object-fit`/`max-width`/`max-height` — the whole point of sizing the
+   card itself to the media (see `.chai-result-card`'s own comment) is that
+   the image never needs cropping or letterboxing to begin with: it just
+   renders at its own natural aspect ratio, full width, corners rounded by
+   `.chai-result-card__face`'s own `overflow: hidden` around it. */
+.chai-result-card__image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chai-result-card__video {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  /* A reasonable guess before real `loadedmetadata` dimensions are known
+     (avoids a 0-height flash) — once they load, intrinsic sizing from
+     `width: 100%; height: auto` takes over and this stops applying. */
+  aspect-ratio: 16 / 9;
+  background: var(--chai-color-semantic-media-backdrop);
+  cursor: pointer;
+}
+
+.chai-result-card__audio {
+  position: relative;
+  z-index: 1;
+  width: 90%;
+}
+
+/* Model output is often long and structured, so line breaks are kept and
+   the text scrolls past a max height instead of growing the card. Builders
+   can change the height with --chai-result-card-text-max-height. */
+.chai-result-card__text-output {
+  position: relative;
+  z-index: 1;
+  /* Starts below the download/share buttons, which sit at the top right:
+     text scrolling underneath them was hard to read. */
+  margin: var(--chai-space-4) 0 0;
+  padding: var(--chai-space-4);
+  min-height: 160px;
+  max-height: var(--chai-result-card-text-max-height, 400px);
+  overflow-y: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--chai-type-size-body-medium);
+  line-height: var(--chai-type-leading-body-medium);
+  color: var(--chai-color-semantic-control-text-strong);
+}
+
+/* An always-visible scrollbar, so it's clear more text exists. macOS hides
+   overlay scrollbars until you scroll, which made long answers look cut
+   off. WebKit/Blink use the pseudo-elements; Firefox the standard props. */
+.chai-result-card__text-output::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chai-result-card__text-output::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chai-result-card__text-output::-webkit-scrollbar-thumb {
+  border-radius: var(--chai-radius-full);
+  background: var(--chai-color-semantic-control-border-soft);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .chai-result-card__text-output {
+    scrollbar-width: thin;
+    scrollbar-color: var(--chai-color-semantic-control-border-soft) transparent;
+  }
+}
+
+/* Streaming caret — a block cursor trailing the partial text while a text
+   result is still arriving. */
+.chai-result-card__text-output--streaming::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--chai-color-semantic-control-text);
+  animation: chai-caret-blink calc(var(--chai-motion-duration-steep) * 1.2) steps(1) infinite;
+}
+
+@keyframes chai-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chai-result-card__text-output--streaming::after {
+    animation: none;
+  }
+}
+
+.chai-result-card__spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--chai-color-semantic-control-border-faint);
+  border-top-color: var(--chai-color-semantic-accent);
+  animation: chai-spin var(--chai-motion-duration-steep) linear infinite;
+}
+
+.chai-result-card__cancelled-text {
+  margin: 0;
+  font-size: var(--chai-type-size-body-medium);
+  color: var(--chai-color-semantic-control-text-muted);
+}
+
+.chai-result-card__error-text {
+  margin: 0;
+  padding: 0 var(--chai-space-4);
+  text-align: center;
+  font-size: var(--chai-type-size-body-medium);
+  color: var(--chai-color-semantic-danger);
+}
+
+/* Play/scrubber sit relative to their nearest positioned ancestor —
+   `.chai-result-card__media` inline, `.chai-result-card__expand-frame`
+   when expanded — not the `<video>` element itself. Both are exactly the
+   video's own rendered box (`object-fit: contain` fills either one), so
+   the same rule works for both without measuring the video's actual
+   painted rect. On an aspect ratio very different from that box, the
+   scrubber can sit in the letterboxed margin rather than snug against the
+   visible frame — accepted trade-off against the complexity of measuring
+   real video bounds for what's a slim progress bar, not a hit-critical
+   control. */
+.chai-result-card__play {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: var(--chai-color-semantic-overlay);
+  color: var(--chai-color-semantic-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chai-result-card__play svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* The scrubber is a 24px-tall slider (WCAG 2.2 target size) drawing the
+   same thin track, centred where the track has always sat. */
+.chai-result-card__scrubber {
+  --chai-scrubber-track: 6px;
+  position: absolute;
+  z-index: 1;
+  left: 12px;
+  right: 12px;
+  /* Above the floating controls in the card; near the bottom when expanded. */
+  bottom: calc(var(--chai-card-bottom-clear, 10px) - (24px - var(--chai-scrubber-track)) / 2);
+  height: 24px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.chai-result-card__scrubber::before,
+.chai-result-card__scrubber-fill {
+  position: absolute;
+  top: calc((24px - var(--chai-scrubber-track)) / 2);
+  height: var(--chai-scrubber-track);
+  border-radius: var(--chai-scrubber-track);
+}
+
+.chai-result-card__scrubber::before {
+  content: "";
+  left: 0;
+  right: 0;
+  background: var(--chai-color-semantic-control-track);
+}
+
+.chai-result-card__scrubber--expanded {
+  --chai-scrubber-track: 8px;
+  left: 16px;
+  right: 16px;
+  bottom: calc(16px - (24px - var(--chai-scrubber-track)) / 2);
+}
+
+.chai-result-card__scrubber-fill {
+  left: 0;
+  background: var(--chai-color-semantic-accent);
+}
+
+/* Transparent, covering the video: the play/pause control. */
+.chai-result-card__video-toggle {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.chai-result-card__collapse {
+  position: fixed;
+  z-index: 2;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--chai-color-semantic-overlay);
+  color: var(--chai-color-semantic-on-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chai-result-card__collapse svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --- More menu (reference: Figma "Result Card - More menu expanded") --- */
+
+.chai-result-card__more {
+  position: relative;
+}
+
+/* Opens upward, not down like the Figma mock's own isolated rendering of
+   it — the "more" trigger sits right at the card's bottom edge, and
+   `.chai-result-card__face` needs `overflow: hidden` for its rounded
+   corners and the flip's `backface-visibility`, which would clip a
+   downward menu (confirmed via a real screenshot during this build — the
+   trigger showed pressed/active but no menu was visible at all). Opening
+   upward keeps it inside the still-visible media area above the bar. */
+.chai-result-card__more-menu {
+  position: absolute;
+  z-index: 10;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: 180px;
+  margin: 0;
+  padding: var(--chai-space-2);
+  list-style: none;
+  border-radius: var(--chai-radius-lg);
+  background: var(--chai-color-semantic-control-surface-raised);
+  box-shadow: var(--chai-shadow-menu);
+}
+
+.chai-result-card__more-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--chai-space-2);
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: var(--chai-radius-sm);
+  background: transparent;
+  color: var(--chai-color-semantic-control-text-strong);
+  font-family: var(--chai-type-family-material);
+  font-size: var(--chai-type-size-body-large);
+  text-align: left;
+  cursor: pointer;
+}
+
+.chai-result-card__more-menu-item:hover {
+  background: var(--chai-color-semantic-control-surface-hover);
+}
+
+.chai-result-card__more-menu-icon {
+  display: flex;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: var(--chai-color-semantic-control-text);
+}
+
+/* --- Info flip (back face) --- */
+
+.chai-result-card__close {
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--chai-color-semantic-control-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chai-result-card__close:hover {
+  color: var(--chai-color-semantic-control-text-strong);
+  background: var(--chai-color-semantic-control-surface-hover);
+}
+
+.chai-result-card__close svg {
+  width: 14px;
+  height: 14px;
+}
+
+.chai-result-card__prompt-box {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin-top: var(--chai-space-4);
+  padding: var(--chai-space-3) var(--chai-space-4);
+  border-radius: 14px;
+  background: var(--chai-color-semantic-control-surface);
+  overflow-y: auto;
+}
+
+.chai-result-card__prompt-text {
+  margin: 0;
+  padding-right: 20px;
+  font-size: var(--chai-type-size-body-medium);
+  line-height: var(--chai-type-leading-body-medium);
+  color: var(--chai-color-semantic-control-text-strong);
+  user-select: text;
+  white-space: pre-wrap;
+}
+
+.chai-result-card__copy {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--chai-color-semantic-control-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chai-result-card__copy:hover {
+  color: var(--chai-color-semantic-control-text-strong);
+  background: var(--chai-color-semantic-control-surface-hover);
+}
+
+.chai-result-card__copy svg {
+  width: 10px;
+  height: 13px;
+}
+
+.chai-result-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--chai-space-2);
+  flex: none;
+}
+
+.chai-result-card__chip {
+  padding: 6px 12px;
+  border-radius: var(--chai-radius-sm);
+  border: 1px solid var(--chai-color-semantic-control-border);
+  font-size: var(--chai-type-size-label-large);
+  color: var(--chai-color-semantic-control-text);
+  white-space: nowrap;
+}
+
+.chai-result-card__chip--evaluation {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chai-result-card__chip--evaluation svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Reference: the mock's checked, filled green "Evaluation" chip. */
+.chai-result-card__chip--passed {
+  border-color: var(--chai-color-semantic-accent);
+  color: var(--chai-color-semantic-accent-text);
+  background: var(--chai-color-semantic-accent-subtle);
+}
+
+/* The failed counterpart, in the danger tokens. Outlined, not filled:
+   danger text on danger-subtle is 2.96:1, under WCAG AA's 4.5:1, while on
+   the card surface it's 4.62:1. The cross icon carries the distinction the
+   fill would have. */
+.chai-result-card__chip--failed {
+  border-color: var(--chai-color-semantic-danger);
+  color: var(--chai-color-semantic-danger);
+}
+
+/* The cross glyph fills its whole viewBox where the check has padding —
+   sized down so both icons read at the same visual weight. */
+.chai-result-card__chip--failed svg {
+  width: 10px;
+  height: 10px;
+  margin: 0 2px;
+}
+
+/* Announced, not shown — carries "passed"/"failed" for screen readers. */
+.chai-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Edit card ------------------------------------------------------------
+   The result card's frame (rounded outline, white action bar) around an
+   image the person marks regions on. The viewport clips the image to the
+   card's corners at every zoom; the layer inside it holds the image and its
+   regions, so both move and scale together. */
+
+.chai-edit-card {
+  width: var(--chai-edit-card-width, 630px);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 29px;
+  border: 1px solid var(--chai-color-semantic-control-border-soft);
+  background: var(--chai-color-semantic-control-surface-raised);
+  overflow: hidden;
+  font-family: var(--chai-type-family-material);
+}
+
+.chai-edit-card__viewport {
+  position: relative;
+  overflow: hidden;
+  background: var(--chai-color-semantic-control-surface);
+  touch-action: none;
+  user-select: none;
+}
+
+.chai-edit-card__viewport--zoomed {
+  cursor: grab;
+}
+
+.chai-edit-card__viewport--zoomed:active {
+  cursor: grabbing;
+}
+
+.chai-edit-card__layer {
+  position: relative;
+  transform-origin: 0 0;
+}
+
+.chai-edit-card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.chai-edit-card__placeholder {
+  min-height: 220px;
+}
+
+/* Region boxes. Borders, badges and handles divide by the zoom so they stay
+   the same size on screen while the image scales. A faint dark outline keeps
+   each colored border visible on light and dark images alike. */
+.chai-edit-card__region {
+  --chai-edit-line: calc(2px / var(--chai-edit-zoom, 1));
+  position: absolute;
+  box-sizing: border-box;
+  border: var(--chai-edit-line) solid var(--chai-region-color);
+  box-shadow: 0 0 0 calc(1px / var(--chai-edit-zoom, 1)) var(--chai-color-semantic-overlay);
+}
+
+.chai-edit-card__region--selected,
+.chai-edit-card__region--draft {
+  border-style: dashed;
+}
+
+/* Regions a version was made with: shown for reference, without a number
+   badge and not selectable, so they don't read as regions to send. */
+.chai-edit-card__region--applied {
+  pointer-events: none;
+}
+
+.chai-edit-card__region-body {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: move;
+}
+
+.chai-edit-card__region-body:disabled {
+  cursor: default;
+}
+
+.chai-edit-card__badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  box-sizing: border-box;
+  border-radius: var(--chai-radius-full);
+  background: var(--chai-region-color);
+  color: var(--chai-color-semantic-text-on-accent);
+  font-size: var(--chai-type-size-label-small);
+  font-weight: var(--chai-type-weight-material-medium);
+  line-height: 1;
+  transform: translate(-50%, -50%) scale(calc(1 / var(--chai-edit-zoom, 1)));
+  pointer-events: none;
+}
+
+.chai-edit-card__handle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border: 1px solid var(--chai-region-color);
+  background: var(--chai-color-semantic-on-overlay);
+  transform: translate(-50%, -50%) scale(calc(1 / var(--chai-edit-zoom, 1)));
+  touch-action: none;
+}
+
+.chai-edit-card__handle--nw { top: 0; left: 0; cursor: nwse-resize; }
+.chai-edit-card__handle--ne { top: 0; left: 100%; cursor: nesw-resize; }
+.chai-edit-card__handle--sw { top: 100%; left: 0; cursor: nesw-resize; }
+.chai-edit-card__handle--se { top: 100%; left: 100%; cursor: nwse-resize; }
+
+/* An edit in progress (or stopped, or failed) over the image it came from. */
+.chai-edit-card__status {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--chai-space-5);
+  background: var(--chai-color-semantic-overlay);
+}
+
+.chai-edit-card__spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--chai-color-semantic-control-border-faint);
+  border-top-color: var(--chai-color-semantic-accent);
+  animation: chai-spin var(--chai-motion-duration-steep) linear infinite;
+}
+
+.chai-edit-card__status-text {
+  margin: 0;
+  text-align: center;
+  font-size: var(--chai-type-size-body-medium);
+  color: var(--chai-color-semantic-on-overlay);
+}
+
+.chai-edit-card__zoom-level {
+  min-width: 34px;
+  text-align: center;
+  font-size: var(--chai-type-size-label-small);
+  font-weight: var(--chai-type-weight-material-medium);
+  letter-spacing: var(--chai-type-tracking-label-small);
+  color: var(--chai-color-semantic-on-overlay);
+}
+
+/* The region's instruction field. A fixed width, so the text wraps after a
+   few words instead of running past the card's edge. */
+.chai-edit-card__popover {
+  position: absolute;
+  z-index: 4;
+  width: 220px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 8px 8px;
+  border-radius: var(--chai-radius-sm);
+  background: var(--chai-color-semantic-scrim);
+  cursor: default;
+}
+
+.chai-edit-card__popover--above {
+  transform: translateY(-100%);
+}
+
+.chai-edit-card__popover-header {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.chai-edit-card__popover-title {
+  flex: 1;
+  font-size: var(--chai-type-size-label-small);
+  font-weight: var(--chai-type-weight-material-medium);
+  letter-spacing: var(--chai-type-tracking-label-small);
+  color: var(--chai-color-semantic-on-overlay);
+}
+
+.chai-edit-card__field {
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 120px;
+  padding: 4px 8px;
+  border: 1px solid var(--chai-color-semantic-on-overlay);
+  border-radius: var(--chai-radius-sm);
+  background: transparent;
+  color: var(--chai-color-semantic-on-overlay);
+  font-family: inherit;
+  font-size: var(--chai-type-size-label-small);
+  line-height: var(--chai-type-leading-label-small);
+  resize: none;
+  overflow-y: auto;
+}
+
+.chai-edit-card__field::placeholder {
+  color: var(--chai-color-semantic-on-overlay);
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chai-edit-card__spinner {
+    animation-duration: calc(var(--chai-motion-duration-steep) * 3);
+  }
+}
+
+/* --- Floating card controls -------------------------------------------------
+   Shared by the image cards (result card, edit card), whose media fills the
+   card. Controls along the top sit in dark translucent groups; controls
+   along the bottom sit on light translucent surfaces: actions on the left,
+   one round button on the right, and the page dots centered above them.
+   Each reads on any image without sampling its colors. */
+
+.chai-card-top {
+  position: absolute;
+  z-index: 3;
+  top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--chai-radius-sm);
+  background: var(--chai-color-semantic-overlay);
+}
+
+.chai-card-top--start {
+  left: 16px;
+}
+
+.chai-card-top--end {
+  right: 16px;
+}
+
+.chai-card-top-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: var(--chai-radius-sm);
+  background: transparent;
+  color: var(--chai-color-semantic-on-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chai-card-top-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.chai-card-top-btn:hover:not(:disabled) {
+  background: var(--chai-color-semantic-overlay);
+}
+
+.chai-card-top-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* The bottom: the actions, floating over the media. */
+.chai-card-bottom {
+  position: absolute;
+  z-index: 3;
+  left: 16px;
+  right: 16px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--chai-space-2);
+}
+
+/* --- Pager bar ---
+ * With several pages (results, or edit versions), the page dots are the
+ * card's last row, centred, in a bar that makes the card that much taller,
+ * with an optional label on the left (the result card's model). Under an
+ * image or video the bar is dark and the media fades into it, so the label
+ * and dots read over any picture. */
+.chai-result-card,
+.chai-edit-card {
+  --chai-card-pager-bar: 40px;
+}
+
+.chai-card-pager-bar {
+  flex: none;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: var(--chai-card-pager-bar);
+  background: var(--chai-color-semantic-control-surface);
+}
+
+.chai-card-pager-bar > .chai-pagination {
+  grid-column: 2;
+}
+
+.chai-card-pager-bar--over-media {
+  background: var(--chai-color-semantic-media-backdrop);
+}
+
+/* An MD3 assist chip with its fill and outline off, in Label Small. */
+.chai-card-pager-label {
+  justify-self: start;
+  min-width: 0;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 var(--chai-space-4);
+  box-sizing: border-box;
+  color: var(--chai-color-semantic-control-text-muted);
+  font-size: var(--chai-type-size-label-small);
+  font-weight: var(--chai-type-weight-material-medium);
+  line-height: var(--chai-type-leading-label-small);
+  letter-spacing: var(--chai-type-tracking-label-small);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chai-card-pager-bar--over-media .chai-card-pager-label {
+  color: var(--chai-color-semantic-on-media-fade);
+}
+
+/* The fade at the bottom of the media, into the dark bar. At most half the
+   media, so on short media it never reaches the buttons along the top. */
+.chai-card-fade {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(120px, 50%);
+  background: var(--chai-gradient-media-fade);
+  pointer-events: none;
+}
+
+.chai-card-actions {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--chai-space-2);
+}
+
+.chai-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--chai-space-2);
+}
+
+/* A labeled action (the edit card's region chips). */
+.chai-card-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--chai-space-2);
+  height: 32px;
+  padding: 0 12px 0 8px;
+  border: none;
+  border-radius: var(--chai-radius-sm);
+  background: var(--chai-color-semantic-overlay-light);
+  color: var(--chai-color-semantic-control-text-strong);
+  font-family: inherit;
+  font-size: var(--chai-type-size-label-large);
+  font-weight: var(--chai-type-weight-material-medium);
+  letter-spacing: var(--chai-type-tracking-label-large);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Icon-only actions in one light pill (the result card's votes and retry). */
+.chai-card-pill {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 2px;
+  border-radius: var(--chai-radius-full);
+  background: var(--chai-color-semantic-overlay-light);
+}
+
+.chai-card-pill-btn,
+.chai-card-round {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--chai-color-semantic-control-text-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* The one round button on the right (show/hide regions, details). */
+.chai-card-round {
+  background: var(--chai-color-semantic-overlay-light);
+}
+
+.chai-card-chip svg,
+.chai-card-pill-btn svg,
+.chai-card-round svg {
+  width: 18px;
+  height: 18px;
+}
+
+.chai-card-chip:hover:not(:disabled),
+.chai-card-pill-btn:hover:not(:disabled),
+.chai-card-round:hover:not(:disabled) {
+  background: var(--chai-color-semantic-control-surface-raised);
+}
+
+/* A vote that's on: green, on a solid surface. */
+.chai-card-pill-btn--active {
+  color: var(--chai-color-semantic-accent-text);
+  background: var(--chai-color-semantic-control-surface-raised);
+}
+
+.chai-card-chip:disabled,
+.chai-card-pill-btn:disabled,
+.chai-card-round:disabled {
+  color: var(--chai-color-semantic-control-text-muted);
+  cursor: not-allowed;
+}
+
+/* --- Page slide ------------------------------------------------------------
+   Shared by the paginated cards: the new page slides in from the side it was
+   paged from while the last image slides out the other way. Skipped (in
+   page-slide.tsx) for people who ask for reduced motion. */
+.chai-slide-in--left {
+  animation: chai-slide-in-left var(--chai-motion-duration-slow) var(--chai-motion-easing-standard);
+}
+
+.chai-slide-in--right {
+  animation: chai-slide-in-right var(--chai-motion-duration-slow) var(--chai-motion-easing-standard);
+}
+
+/* The outgoing image stays in the layout, holding the card's height while
+   the new page (laid over it) loads. */
+.chai-slide-out {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.chai-slide-in--over {
+  position: absolute;
+  inset: 0;
+}
+
+.chai-slide-out--left {
+  animation: chai-slide-out-left var(--chai-motion-duration-slow) var(--chai-motion-easing-standard) forwards;
+}
+
+.chai-slide-out--right {
+  animation: chai-slide-out-right var(--chai-motion-duration-slow) var(--chai-motion-easing-standard) forwards;
+}
+
+@keyframes chai-slide-in-left {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes chai-slide-in-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes chai-slide-out-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes chai-slide-out-right {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+/* --- Focus rings ------------------------------------------------------------
+   On by default: every CHAI control shows a visible keyboard-focus ring,
+   which WCAG 2.4.7 Focus Visible requires. Buttons and menu items
+   keep the browser's own ring; MD3 elements (the submit FAB, the switch)
+   draw `<md-focus-ring>`. The Composer's textarea is the one control that
+   had none — its ring goes on the whole pill, matching MD3's ring width
+   and color so every ring in a component reads as the same system. */
+.chai-composer:has(.chai-composer__field:not(.chai-composer__field--boxed) .chai-composer__input:focus-visible),
+/* A world's two boxes: the ring marks the box being typed in, not the bar. */
+.chai-composer__field--boxed:has(.chai-composer__input:focus-visible) {
+  outline: 3px solid var(--chai-color-semantic-accent);
+  outline-offset: 2px;
+}
+
+/* Off switch: `data-chai-focus-ring="hidden"` on any ancestor hides every
+   CHAI focus ring inside it — for a showcase or preview surface, not a
+   production app. Hiding them removes the only indicator keyboard users
+   have of where they are, failing WCAG 2.4.7 Focus Visible.
+   Scoped to CHAI's own roots so a builder's other controls under the same
+   ancestor keep theirs. */
+[data-chai-focus-ring="hidden"] :is(
+    .chai-composer,
+    .chai-media-analyzer,
+    .chai-result-card,
+    .chai-result-card__expand-overlay,
+    .chai-edit-card,
+    .chai-search-menu,
+    .chai-pagination,
+    .chai-switch
+  ) {
+  --md-focus-ring-width: 0px;
+  --md-focus-ring-active-width: 0px;
+}
+
+[data-chai-focus-ring="hidden"] .chai-composer:has(.chai-composer__input:focus-visible),
+[data-chai-focus-ring="hidden"] .chai-composer__field--boxed:has(.chai-composer__input:focus-visible),
+[data-chai-focus-ring="hidden"] :is(
+    .chai-composer,
+    .chai-media-analyzer,
+    .chai-result-card,
+    .chai-result-card__expand-overlay,
+    .chai-edit-card,
+    .chai-search-menu,
+    .chai-pagination
+  ) :focus-visible {
+  outline: none;
+}
