@@ -43,10 +43,10 @@ const BUSINESS_TYPES = [
   "Other"
 ];
 const BUDGETS = [
-  "₹5,000 to ₹10,000",
-  "₹10,000 to ₹25,000",
-  "₹25,000 to ₹50,000",
-  "₹50,000+"
+  "â‚¹5,000 to â‚¹10,000",
+  "â‚¹10,000 to â‚¹25,000",
+  "â‚¹25,000 to â‚¹50,000",
+  "â‚¹50,000+"
 ];
 
 /* ------------------------------------------------------------------
@@ -469,9 +469,88 @@ app.post("/api/logout", authenticate, function (req, res) {
   res.json({ success: true });
 });
 
+
 /* ------------------------------------------------------------------
-   Errors and 404
+   BrandX Web AI Voice Agent
 ------------------------------------------------------------------ */
+
+app.post("/api/chat", rateLimit("voice-chat", 20, 60 * 1000), async function (req, res) {
+  const body = req.body || {};
+  const message = clean(
+    body.message || body.text || body.transcript || "",
+    1000
+  );
+
+  if (!message) {
+    return res.status(400).json({
+      success: false,
+      message: "Please enter a message."
+    });
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
+    return res.status(503).json({
+      success: false,
+      message: "The AI assistant is not configured on the server."
+    });
+  }
+
+  try {
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+      timeout: 30000,
+      maxRetries: 1
+    });
+
+    const response = await openai.responses.create({
+      model: process.env.OPENAI_MODEL || "gpt-5.5",
+      store: false,
+      max_output_tokens: 500,
+      instructions: [
+        "You are the helpful, professional AI assistant for BrandX Web, a website design service.",
+        "Help with website design, content, SEO, accessibility, mobile usability, performance, and business growth.",
+        "Give clear, practical answers and prioritize recommendations when appropriate.",
+        "Never claim you scanned or tested a website unless actual inspection results were supplied.",
+        "If asked for a website audit but you lack the page content or audit results, explain the limitation and ask for the URL or relevant material.",
+        "Distinguish general advice from verified findings.",
+        "Never ask users to reveal passwords or secret API keys."
+      ].join(" "),
+      input: message
+    });
+
+    const reply = (response.output_text || "").trim();
+
+    if (!reply) {
+      return res.status(502).json({
+        success: false,
+        message: "The AI returned an empty response. Please try again."
+      });
+    }
+
+    return res.json({
+      success: true,
+      reply: reply
+    });
+  } catch (error) {
+    console.error(
+      "[Voice Agent] OpenAI request failed:",
+      error.status || "",
+      error.message
+    );
+
+    if (error.status === 429) {
+      return res.status(429).json({
+        success: false,
+        message: "The AI service is busy or its usage limit may have been reached. Check your API usage and billing."
+      });
+    }
+
+    return res.status(502).json({
+      success: false,
+      message: "The AI service could not respond. Check the server logs and API configuration."
+    });
+  }
+});
 
 app.use("/api", function (req, res) {
   res.status(404).json({ success: false, message: "Not found." });
