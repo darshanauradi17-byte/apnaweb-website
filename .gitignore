@@ -1,0 +1,22 @@
+# Secrets: never commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Customer data (names, phones, emails)
+data/*
+!data/.gitkeep
+
+# Dependencies, logs, temp files
+node_modules/
+*.log
+npm-debug.log*
+*.tmp
+.DS_Store
+.vscode/
+.idea/
+coverage/

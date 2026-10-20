@@ -1,0 +1,26 @@
+{
+  "name": "brandx-web",
+  "version": "2.0.0",
+  "description": "BrandX Web: websites for local businesses, with a request form, request tracking and a protected owner dashboard.",
+  "main": "server.js",
+  "scripts": {
+  "start": "cross-env NODE_ENV=production node server.js",
+  "dev": "cross-env NODE_ENV=development node server.js",
+  "hash-password": "node scripts/hash-password.js",
+  "test": "node --test tests/security.test.js",
+  "audit": "npm audit --audit-level=moderate"
+},
+  "dependencies": {
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "private": true,
+  "devDependencies": {
+    "cross-env": "^10.1.0"
+  }
+}
