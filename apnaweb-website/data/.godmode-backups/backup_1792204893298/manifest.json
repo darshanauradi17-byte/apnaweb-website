@@ -1,0 +1,18 @@
+{
+  "backupId": "backup_1792204893298",
+  "planId": "plan_1792204888734_ppzv",
+  "title": "Add Floating WhatsApp Quick-Connect Widget",
+  "timestamp": "2026-10-17T02:41:33.301Z",
+  "files": [
+    {
+      "originalPath": "public/index.html",
+      "backupFile": "public_index.html",
+      "existed": true
+    },
+    {
+      "originalPath": "public/css/site.css",
+      "backupFile": "public_css_site.css",
+      "existed": true
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "backupId": "backup_1792204563772",
+  "planId": "plan_1792204494275_gjfh",
+  "title": "Fix Broken Service Card Images",
+  "timestamp": "2026-10-17T02:36:03.781Z",
+  "files": [
+    {
+      "originalPath": "public/index.html",
+      "backupFile": "public_index.html",
+      "existed": true
+    }
+  ]
+}
