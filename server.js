@@ -841,9 +841,12 @@ app.get("/api/session", adminIpGate, adminLimiter, function (req, res) {
   res.json(s ? { success: true, authenticated: true, csrf: s.csrf } : { success: true, authenticated: false });
 });
 
-app.use(["/api/submissions", "/api/messages", "/api/logout"], adminIpGate, adminLimiter, authenticate);
+/* Owner-only middleware applied to every protected route individually, because
+   app.use() with a path array only matches the base path — sub-paths like
+   /api/submissions/:id would bypass it. */
+const ownerOnly = [adminIpGate, adminLimiter, authenticate];
 
-app.post("/api/logout", function (req, res) {
+app.post("/api/logout", ...ownerOnly, function (req, res) {
   sessions.delete(req.session.key);
   setSessionCookie(req, res, "", 0);
   res.json({ success: true });
@@ -855,7 +858,7 @@ function matchesId(item, id) {
   return String(item.requestId) === id || String(item.id) === id;
 }
 
-app.get("/api/submissions", function (req, res) {
+app.get("/api/submissions", ...ownerOnly, function (req, res) {
   try {
     res.json({ success: true, submissions: readJson(SUBMISSIONS_FILE) });
   } catch (error) {
@@ -863,10 +866,12 @@ app.get("/api/submissions", function (req, res) {
   }
 });
 
-app.patch("/api/submissions/:id", function (req, res) {
+app.patch("/api/submissions/:id", ...ownerOnly, function (req, res) {
   try {
     const id = req.params.id;
-    const status = req.body && req.body.status;
+    const body = req.body || {};
+    const status = body.status;
+    const adminNotes = typeof body.adminNotes === "string" ? clean(body.adminNotes, 5000, true) : undefined;
     if (!RECORD_ID.test(id)) return res.status(400).json({ success: false, message: "Invalid request." });
     if (!STATUSES.includes(status)) {
       return res.status(400).json({ success: false, message: "Invalid status." });
@@ -877,6 +882,7 @@ app.patch("/api/submissions/:id", function (req, res) {
     if (!item) return res.status(404).json({ success: false, message: "Request not found." });
 
     item.status = status;
+    if (adminNotes !== undefined) item.adminNotes = adminNotes;
     item.updatedAt = new Date().toISOString();
     writeJson(SUBMISSIONS_FILE, submissions);
 
@@ -886,7 +892,7 @@ app.patch("/api/submissions/:id", function (req, res) {
   }
 });
 
-app.delete("/api/submissions/:id", function (req, res) {
+app.delete("/api/submissions/:id", ...ownerOnly, function (req, res) {
   try {
     const id = req.params.id;
     if (!RECORD_ID.test(id)) return res.status(400).json({ success: false, message: "Invalid request." });
@@ -902,7 +908,32 @@ app.delete("/api/submissions/:id", function (req, res) {
   }
 });
 
-app.get("/api/messages", function (req, res) {
+// CSV export of all submissions (owner-only).
+function csvEscape(value) {
+  const text = String(value == null ? "" : value).replace(/\r\n?/g, "\n");
+  if (/[",\n]/.test(text)) return '"' + text.replace(/"/g, '""') + '"';
+  return text;
+}
+
+app.get("/api/submissions/export.csv", ...ownerOnly, function (req, res) {
+  try {
+    const submissions = readJson(SUBMISSIONS_FILE);
+    const cols = ["requestId", "ownerName", "businessName", "businessType", "phone", "email", "city", "budget", "requirements", "adminNotes", "status", "createdAt", "updatedAt"];
+    const header = cols.join(",");
+    const rows = submissions.map(function (item) {
+      return cols.map(function (col) { return csvEscape(item[col]); }).join(",");
+    });
+    const csv = header + "\n" + rows.join("\n") + "\n";
+    const date = new Date().toISOString().slice(0, 10);
+    res.set("Content-Type", "text/csv; charset=utf-8");
+    res.set("Content-Disposition", "attachment; filename=\"brandx-submissions-" + date + ".csv\"");
+    res.send(csv);
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Could not export requests." });
+  }
+});
+
+app.get("/api/messages", ...ownerOnly, function (req, res) {
   try {
     res.json({ success: true, messages: readJson(MESSAGES_FILE) });
   } catch (error) {
@@ -910,7 +941,7 @@ app.get("/api/messages", function (req, res) {
   }
 });
 
-app.delete("/api/messages/:id", function (req, res) {
+app.delete("/api/messages/:id", ...ownerOnly, function (req, res) {
   try {
     const id = req.params.id;
     if (!RECORD_ID.test(id)) return res.status(400).json({ success: false, message: "Invalid request." });

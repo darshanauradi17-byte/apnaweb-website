@@ -447,6 +447,25 @@ dialog::backdrop {
   color: var(--text-2);
 }
 
+.detail-notes {
+  width: 100%;
+  min-height: 60px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  background: var(--paper);
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.detail-notes:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
 /* Toast */
 
 .toast {

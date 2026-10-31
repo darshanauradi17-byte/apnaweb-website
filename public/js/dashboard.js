@@ -244,6 +244,13 @@
     });
   });
 
+  var exportBtn = document.getElementById("exportBtn");
+  if (exportBtn) {
+    exportBtn.addEventListener("click", function () {
+      window.location.href = "/api/submissions/export.csv";
+    });
+  }
+
   /* ---------- stats ---------- */
 
   function renderStats() {
@@ -500,6 +507,34 @@
       list.appendChild(el("dd", { text: row[1] }));
     });
     document.getElementById("detailText").textContent = item.requirements || "Nothing provided.";
+
+    /* Admin notes */
+    var notesArea = document.getElementById("detailNotes");
+    var saveNotesBtn = document.getElementById("saveNotesBtn");
+    if (notesArea && saveNotesBtn) {
+      notesArea.value = item.adminNotes || "";
+      saveNotesBtn.onclick = function () {
+        saveNotesBtn.disabled = true;
+        saveNotesBtn.textContent = "Saving...";
+        var key = item.id || item.requestId;
+        api("/api/submissions/" + encodeURIComponent(key), {
+          method: "PATCH",
+          body: JSON.stringify({ status: item.status, adminNotes: notesArea.value })
+        })
+          .then(function (data) {
+            item.adminNotes = notesArea.value;
+            if (data.submission) item.updatedAt = data.submission.updatedAt;
+            toast("Notes saved");
+          })
+          .catch(function (error) {
+            if (error.message !== "auth") toast(error.message, true);
+          })
+          .then(function () {
+            saveNotesBtn.disabled = false;
+            saveNotesBtn.textContent = "Save notes";
+          });
+      };
+    }
 
     if (typeof detail.showModal === "function") detail.showModal();
   }

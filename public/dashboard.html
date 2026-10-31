@@ -71,6 +71,7 @@
         </select>
       </div>
       <button class="btn btn-secondary" id="refreshBtn" type="button">Refresh</button>
+      <button class="btn btn-secondary" id="exportBtn" type="button">Export CSV</button>
     </div>
 
     <div class="alert alert-error" id="listError" role="alert" hidden></div>
@@ -110,6 +111,9 @@
   <dl class="detail-list" id="detailList"></dl>
   <h3 class="detail-sub">What they need</h3>
   <p class="detail-text" id="detailText"></p>
+  <h3 class="detail-sub">Your notes</h3>
+  <textarea class="detail-notes" id="detailNotes" rows="3" maxlength="5000" placeholder="Add internal notes about this request..."></textarea>
+  <button class="btn btn-primary btn-sm" id="saveNotesBtn" type="button">Save notes</button>
 </dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
